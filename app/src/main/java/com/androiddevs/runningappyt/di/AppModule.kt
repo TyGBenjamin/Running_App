@@ -5,6 +5,7 @@ import android.content.Context.MODE_PRIVATE
 import android.content.SharedPreferences
 import androidx.room.Room
 import com.androiddevs.runningappyt.db.RunningDatabase
+import com.androiddevs.runningappyt.other.Constants
 import com.androiddevs.runningappyt.other.Constants.KEY_FIRST_TIME_TOGGLE
 import com.androiddevs.runningappyt.other.Constants.KEY_NAME
 import com.androiddevs.runningappyt.other.Constants.KEY_WEIGHT
@@ -46,18 +47,11 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun provideWeight(sharedPref: SharedPreferences) = sharedPref.getFloat(KEY_WEIGHT, 80f)
+    fun provideWeight(sharedPref: SharedPreferences) =
+        sharedPref.getFloat(KEY_WEIGHT, Constants.Default.WEIGHT)
 
     @Singleton
     @Provides
     fun provideFirstTimeToggle(sharedPref: SharedPreferences) =
         sharedPref.getBoolean(KEY_FIRST_TIME_TOGGLE, true)
 }
-
-
-
-
-
-
-
-

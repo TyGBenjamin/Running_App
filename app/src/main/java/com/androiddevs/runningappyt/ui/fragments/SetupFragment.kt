@@ -1,3 +1,5 @@
+@file:Suppress("ktlint:import-ordering")
+
 package com.androiddevs.runningappyt.ui.fragments
 
 import android.content.SharedPreferences
@@ -10,12 +12,20 @@ import com.androiddevs.runningappyt.R
 import com.androiddevs.runningappyt.other.Constants.KEY_FIRST_TIME_TOGGLE
 import com.androiddevs.runningappyt.other.Constants.KEY_NAME
 import com.androiddevs.runningappyt.other.Constants.KEY_WEIGHT
-import com.google.android.material.snackbar.Snackbar
+import com.androiddevs.runningappyt.other.showSnack
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.fragment_setup.*
+import java.util.Locale
 import javax.inject.Inject
+import kotlinx.android.synthetic.main.activity_main.tvToolbarTitle
+import kotlinx.android.synthetic.main.fragment_setup.etName
+import kotlinx.android.synthetic.main.fragment_setup.etWeight
+import kotlinx.android.synthetic.main.fragment_setup.tvContinue
 
+/**
+ * [Fragment] to manage user detail entry.
+ *
+ * @constructor Create instance of [SetupFragment]
+ */
 @AndroidEntryPoint
 class SetupFragment : Fragment(R.layout.fragment_setup) {
 
@@ -28,7 +38,7 @@ class SetupFragment : Fragment(R.layout.fragment_setup) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        if(!isFirstAppOpen) {
+        if (!isFirstAppOpen) {
             val navOptions = NavOptions.Builder()
                 .setPopUpTo(R.id.setupFragment, true)
                 .build()
@@ -41,28 +51,24 @@ class SetupFragment : Fragment(R.layout.fragment_setup) {
 
         tvContinue.setOnClickListener {
             val success = writePersonalDataToSharedPref()
-            if(success) {
+            if (success) {
                 findNavController().navigate(R.id.action_setupFragment_to_runFragment)
             } else {
-                Snackbar.make(requireView(), "Please enter all the fields", Snackbar.LENGTH_SHORT).show()
+                requireView().showSnack("Please enter all the fields")
             }
         }
     }
 
-    private fun writePersonalDataToSharedPref(): Boolean {
+    private fun writePersonalDataToSharedPref(): Boolean = with(sharedPref.edit()) {
         val name = etName.text.toString()
         val weight = etWeight.text.toString()
-        if(name.isEmpty() || weight.isEmpty()) {
-            return false
-        }
-        sharedPref.edit()
-            .putString(KEY_NAME, name)
-            .putFloat(KEY_WEIGHT, weight.toFloat())
-            .putBoolean(KEY_FIRST_TIME_TOGGLE, false)
-            .apply()
-        val toolbarText = "Let's go, $name!"
-        requireActivity().tvToolbarTitle.text = toolbarText
+        if (name.isEmpty() || weight.isEmpty()) return false
+        putString(KEY_NAME, name)
+        putFloat(KEY_WEIGHT, weight.toFloat())
+        putBoolean(KEY_FIRST_TIME_TOGGLE, false)
+        apply()
+        requireActivity().tvToolbarTitle.text =
+            String.format(Locale.getDefault(), "Let's go, %s", name)
         return true
     }
-
 }

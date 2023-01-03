@@ -10,6 +10,12 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+/**
+ * [ViewModel] to manage all run related tasks.
+ *
+ * @property mainRepository used to fetch and update runs
+ * @constructor Create instance of [MainViewModel]
+ */
 @HiltViewModel
 class MainViewModel @Inject constructor(private val mainRepository: MainRepository) : ViewModel() {
 
@@ -51,6 +57,11 @@ class MainViewModel @Inject constructor(private val mainRepository: MainReposito
         }
     }
 
+    /**
+     * Sort runs based on provided [SortType].
+     *
+     * @param sortType used to sort the runs.
+     */
     fun sortRuns(sortType: SortType) = when (sortType) {
         SortType.DATE -> runsSortedByDate.value?.let { runs.value = it }
         SortType.RUNNING_TIME -> runsSortedByTimeInMillis.value?.let { runs.value = it }
@@ -61,22 +72,12 @@ class MainViewModel @Inject constructor(private val mainRepository: MainReposito
         this.sortType = sortType
     }
 
-    fun insertRun(run: Run) = viewModelScope.launch {
+    /**
+     * Save a finished [Run].
+     *
+     * @param run to be saved.
+     */
+    fun saveRun(run: Run) = viewModelScope.launch {
         mainRepository.insertRun(run)
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -2,6 +2,11 @@ package com.androiddevs.runningappyt.other
 
 import android.graphics.Color
 
+/**
+ * Holds constant values for project.
+ *
+ * @constructor Create instance of [Constants]
+ */
 object Constants {
 
     const val RUNNING_DATABASE_NAME = "running_db"
@@ -30,4 +35,32 @@ object Constants {
     const val NOTIFICATION_CHANNEL_ID = "tracking_channel"
     const val NOTIFICATION_CHANNEL_NAME = "Tracking"
     const val NOTIFICATION_ID = 1
+
+    /**
+     * Time related constants.
+     *
+     * @constructor Create instance of [Time]
+     */
+    object Time {
+        const val MILLI_SEC = 1000L
+    }
+
+    /**
+     * Default values.
+     *
+     * @constructor Create instance of [Default]
+     */
+    object Default {
+        const val WEIGHT = 80f
+    }
+
+    /**
+     * Float values.
+     *
+     * @constructor Create instance of [Float]
+     */
+    object Float {
+        const val THOUSAND = 1000f
+        const val TEN = 10f
+    }
 }

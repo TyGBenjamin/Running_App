@@ -1,0 +1,3 @@
+[submodule "android-config"]
+	path = android-config
+	url = https://gitlab.com/ravebizz-android-training/internal-tools-and-resources/android-config.git

@@ -5,6 +5,13 @@ import com.androiddevs.runningappyt.repositories.MainRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
+/**
+ * [ViewModel] to manage all run statistics.
+ *
+ * @constructor Create instance of [StatisticsViewModel]
+ *
+ * @param mainRepository used to fetch and update runs
+ */
 @HiltViewModel
 class StatisticsViewModel @Inject constructor(mainRepository: MainRepository) : ViewModel() {
 
@@ -12,6 +19,5 @@ class StatisticsViewModel @Inject constructor(mainRepository: MainRepository) : 
     val totalDistance = mainRepository.getTotalDistance()
     val totalCaloriesBurned = mainRepository.getTotalCaloriesBurned()
     val totalAvgSpeed = mainRepository.getTotalAvgSpeed()
-
     val runsSortedByDate = mainRepository.getAllRunsSortedByDate()
 }

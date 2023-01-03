@@ -9,8 +9,15 @@ import androidx.navigation.ui.setupWithNavController
 import com.androiddevs.runningappyt.R
 import com.androiddevs.runningappyt.other.Constants.ACTION_SHOW_TRACKING_FRAGMENT
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_main.bottomNavigationView
+import kotlinx.android.synthetic.main.activity_main.navHostFragment
+import kotlinx.android.synthetic.main.activity_main.toolbar
 
+/**
+ * [AppCompatActivity] to host toolbar, bottom navigation and fragments.
+ *
+ * @constructor Create instance of [MainActivity]
+ */
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 

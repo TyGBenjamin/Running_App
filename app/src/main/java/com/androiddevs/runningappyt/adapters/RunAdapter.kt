@@ -1,3 +1,5 @@
+@file:Suppress("ktlint:import-ordering")
+
 package com.androiddevs.runningappyt.adapters
 
 import android.view.LayoutInflater
@@ -8,17 +10,36 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.androiddevs.runningappyt.R
 import com.androiddevs.runningappyt.db.Run
+import com.androiddevs.runningappyt.other.Constants
 import com.androiddevs.runningappyt.other.TrackingUtility
 import com.bumptech.glide.Glide
-import kotlinx.android.synthetic.main.item_run.view.*
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Calendar
+import java.util.Locale
+import kotlinx.android.synthetic.main.item_run.view.ivRunImage
+import kotlinx.android.synthetic.main.item_run.view.tvAvgSpeed
+import kotlinx.android.synthetic.main.item_run.view.tvCalories
+import kotlinx.android.synthetic.main.item_run.view.tvDate
+import kotlinx.android.synthetic.main.item_run.view.tvDistance
+import kotlinx.android.synthetic.main.item_run.view.tvTime
 
+/**
+ * [RecyclerView.Adapter] to display [List] of [Run].
+ *
+ * @constructor Create instance of [RunAdapter]
+ */
 class RunAdapter : RecyclerView.Adapter<RunAdapter.RunViewHolder>() {
 
-    inner class RunViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
+    /**
+     * Run view holder.
+     *
+     * @constructor Create instance of [RunViewHolder]
+     *
+     * @param itemView
+     */
+    class RunViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
-    val diffCallback = object : DiffUtil.ItemCallback<Run>() {
+    private val diffCallback = object : DiffUtil.ItemCallback<Run>() {
         override fun areItemsTheSame(oldItem: Run, newItem: Run): Boolean {
             return oldItem.id == newItem.id
         }
@@ -28,8 +49,13 @@ class RunAdapter : RecyclerView.Adapter<RunAdapter.RunViewHolder>() {
         }
     }
 
-    val differ = AsyncListDiffer(this, diffCallback)
+    private val differ = AsyncListDiffer(this, diffCallback)
 
+    /**
+     * Used to update adapter with new [List] of [Run].
+     *
+     * @param list to be displayed
+     */
     fun submitList(list: List<Run>) = differ.submitList(list)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RunViewHolder {
@@ -43,7 +69,7 @@ class RunAdapter : RecyclerView.Adapter<RunAdapter.RunViewHolder>() {
     }
 
     override fun getItemCount(): Int {
-       return differ.currentList.size
+        return differ.currentList.size
     }
 
     override fun onBindViewHolder(holder: RunViewHolder, position: Int) {
@@ -60,7 +86,7 @@ class RunAdapter : RecyclerView.Adapter<RunAdapter.RunViewHolder>() {
             val avgSpeed = "${run.avgSpeedInKMH}km/h"
             tvAvgSpeed.text = avgSpeed
 
-            val distanceInKm = "${run.distanceInMeters / 1000f}km"
+            val distanceInKm = "${run.distanceInMeters / Constants.Float.THOUSAND}km"
             tvDistance.text = distanceInKm
 
             tvTime.text = TrackingUtility.getFormattedStopWatchTime(run.timeInMillis)
@@ -70,17 +96,3 @@ class RunAdapter : RecyclerView.Adapter<RunAdapter.RunViewHolder>() {
         }
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-

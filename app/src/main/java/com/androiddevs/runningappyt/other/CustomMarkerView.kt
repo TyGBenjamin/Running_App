@@ -1,20 +1,38 @@
+@file:Suppress("ktlint:import-ordering")
+
 package com.androiddevs.runningappyt.other
 
+import android.annotation.SuppressLint
 import android.content.Context
 import com.androiddevs.runningappyt.db.Run
 import com.github.mikephil.charting.components.MarkerView
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.highlight.Highlight
 import com.github.mikephil.charting.utils.MPPointF
-import kotlinx.android.synthetic.main.marker_view.view.*
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Calendar
+import java.util.Locale
+import kotlinx.android.synthetic.main.marker_view.view.tvAvgSpeed
+import kotlinx.android.synthetic.main.marker_view.view.tvCaloriesBurned
+import kotlinx.android.synthetic.main.marker_view.view.tvDate
+import kotlinx.android.synthetic.main.marker_view.view.tvDistance
+import kotlinx.android.synthetic.main.marker_view.view.tvDuration
 
+/**
+ * Custom [MarkerView].
+ *
+ * @property runs to create custom markers for
+ * @constructor Create instance of [CustomMarkerView]
+ *
+ * @param context used for view inflation
+ * @param layoutId that references custom view xml
+ */
+@SuppressLint("ViewConstructor")
 class CustomMarkerView(
     val runs: List<Run>,
-    c: Context,
+    context: Context,
     layoutId: Int
-) : MarkerView(c, layoutId) {
+) : MarkerView(context, layoutId) {
 
     override fun getOffset(): MPPointF {
         return MPPointF(-width / 2f, -height.toFloat())
@@ -22,7 +40,7 @@ class CustomMarkerView(
 
     override fun refreshContent(e: Entry?, highlight: Highlight?) {
         super.refreshContent(e, highlight)
-        if(e == null) {
+        if (e == null) {
             return
         }
         val curRunId = e.x.toInt()
@@ -37,7 +55,7 @@ class CustomMarkerView(
         val avgSpeed = "${run.avgSpeedInKMH}km/h"
         tvAvgSpeed.text = avgSpeed
 
-        val distanceInKm = "${run.distanceInMeters / 1000f}km"
+        val distanceInKm = "${run.distanceInMeters / Constants.Float.THOUSAND}km"
         tvDistance.text = distanceInKm
 
         tvDuration.text = TrackingUtility.getFormattedStopWatchTime(run.timeInMillis)

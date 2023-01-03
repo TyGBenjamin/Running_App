@@ -5,14 +5,22 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import com.androiddevs.runningappyt.R
+import com.androiddevs.runningappyt.other.Constants
 import com.androiddevs.runningappyt.other.Constants.KEY_NAME
 import com.androiddevs.runningappyt.other.Constants.KEY_WEIGHT
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.fragment_settings.*
+import kotlinx.android.synthetic.main.activity_main.tvToolbarTitle
+import kotlinx.android.synthetic.main.fragment_settings.btnApplyChanges
+import kotlinx.android.synthetic.main.fragment_settings.etName
+import kotlinx.android.synthetic.main.fragment_settings.etWeight
 import javax.inject.Inject
 
+/**
+ * [Fragment] to manage all user settings.
+ *
+ * @constructor instance of [SettingsFragment].
+ */
 @AndroidEntryPoint
 class SettingsFragment : Fragment(R.layout.fragment_settings) {
 
@@ -24,7 +32,7 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
         loadFieldsFromSharedPref()
         btnApplyChanges.setOnClickListener {
             val success = applyChangesToSharedPref()
-            if(success) {
+            if (success) {
                 Snackbar.make(view, "Saved changes", Snackbar.LENGTH_LONG).show()
             } else {
                 Snackbar.make(view, "Please fill out all the fields", Snackbar.LENGTH_LONG).show()
@@ -34,7 +42,7 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
 
     private fun loadFieldsFromSharedPref() {
         val name = sharedPreferences.getString(KEY_NAME, "")
-        val weight = sharedPreferences.getFloat(KEY_WEIGHT, 80f)
+        val weight = sharedPreferences.getFloat(KEY_WEIGHT, Constants.Default.WEIGHT)
         etName.setText(name)
         etWeight.setText(weight.toString())
     }
@@ -42,7 +50,7 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
     private fun applyChangesToSharedPref(): Boolean {
         val nameText = etName.text.toString()
         val weightText = etWeight.text.toString()
-        if(nameText.isEmpty() || weightText.isEmpty()) {
+        if (nameText.isEmpty() || weightText.isEmpty()) {
             return false
         }
         sharedPreferences.edit()

@@ -5,10 +5,8 @@ import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
-import android.widget.LinearLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.androiddevs.runningappyt.R
@@ -18,10 +16,17 @@ import com.androiddevs.runningappyt.other.SortType
 import com.androiddevs.runningappyt.other.TrackingUtility
 import com.androiddevs.runningappyt.ui.viewmodels.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.fragment_run.*
+import kotlinx.android.synthetic.main.fragment_run.fab
+import kotlinx.android.synthetic.main.fragment_run.rvRuns
+import kotlinx.android.synthetic.main.fragment_run.spFilter
 import pub.devrel.easypermissions.AppSettingsDialog
 import pub.devrel.easypermissions.EasyPermissions
 
+/**
+ * [Fragment] to view details of all finished runs.
+ *
+ * @constructor Create instance of [RunFragment]
+ */
 @AndroidEntryPoint
 class RunFragment : Fragment(R.layout.fragment_run), EasyPermissions.PermissionCallbacks {
 
@@ -35,11 +40,11 @@ class RunFragment : Fragment(R.layout.fragment_run), EasyPermissions.PermissionC
         setupRecyclerView()
 
         when (viewModel.sortType) {
-            SortType.DATE -> spFilter.setSelection(0)
-            SortType.RUNNING_TIME -> spFilter.setSelection(1)
-            SortType.DISTANCE -> spFilter.setSelection(2)
-            SortType.AVG_SPEED -> spFilter.setSelection(3)
-            SortType.CALORIES_BURNED -> spFilter.setSelection(4)
+            SortType.DATE -> spFilter.setSelection(viewModel.sortType.ordinal)
+            SortType.RUNNING_TIME -> spFilter.setSelection(viewModel.sortType.ordinal)
+            SortType.DISTANCE -> spFilter.setSelection(viewModel.sortType.ordinal)
+            SortType.AVG_SPEED -> spFilter.setSelection(viewModel.sortType.ordinal)
+            SortType.CALORIES_BURNED -> spFilter.setSelection(viewModel.sortType.ordinal)
         }
 
         spFilter.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -52,11 +57,11 @@ class RunFragment : Fragment(R.layout.fragment_run), EasyPermissions.PermissionC
                 id: Long
             ) {
                 when (pos) {
-                    0 -> viewModel.sortRuns(SortType.DATE)
-                    1 -> viewModel.sortRuns(SortType.RUNNING_TIME)
-                    2 -> viewModel.sortRuns(SortType.DISTANCE)
-                    3 -> viewModel.sortRuns(SortType.AVG_SPEED)
-                    4 -> viewModel.sortRuns(SortType.CALORIES_BURNED)
+                    SortType.DATE.ordinal -> viewModel.sortRuns(SortType.DATE)
+                    SortType.RUNNING_TIME.ordinal -> viewModel.sortRuns(SortType.RUNNING_TIME)
+                    SortType.DISTANCE.ordinal -> viewModel.sortRuns(SortType.DISTANCE)
+                    SortType.AVG_SPEED.ordinal -> viewModel.sortRuns(SortType.AVG_SPEED)
+                    SortType.CALORIES_BURNED.ordinal -> viewModel.sortRuns(SortType.CALORIES_BURNED)
                 }
             }
         }
@@ -118,9 +123,3 @@ class RunFragment : Fragment(R.layout.fragment_run), EasyPermissions.PermissionC
         EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this)
     }
 }
-
-
-
-
-
-
