@@ -18,6 +18,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.androiddevs.runningappyt.R
+import com.androiddevs.runningappyt.databinding.FragmentTrackingBinding
 import com.androiddevs.runningappyt.db.Run
 import com.androiddevs.runningappyt.other.Constants.ACTION_PAUSE_SERVICE
 import com.androiddevs.runningappyt.other.Constants.ACTION_START_OR_RESUME_SERVICE
@@ -38,13 +39,9 @@ import com.google.android.gms.maps.model.PolylineOptions
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
-import java.util.Calendar
-import javax.inject.Inject
 import kotlin.math.round
-import kotlinx.android.synthetic.main.fragment_tracking.btnFinishRun
-import kotlinx.android.synthetic.main.fragment_tracking.btnToggleRun
-import kotlinx.android.synthetic.main.fragment_tracking.mapView
-import kotlinx.android.synthetic.main.fragment_tracking.tvTimer
+import javax.inject.Inject
+import java.util.Calendar
 
 /**
  * [Fragment] to handle map related tasks used for tracking run.
@@ -53,6 +50,9 @@ import kotlinx.android.synthetic.main.fragment_tracking.tvTimer
  */
 @AndroidEntryPoint
 class TrackingFragment : Fragment(R.layout.fragment_tracking) {
+    private val binding by lazy { FragmentTrackingBinding.inflate(LayoutInflater.from(requireContext())) }
+    val tvTimer by lazy { binding.tvTimer }
+    val mapView by lazy { binding.mapView }
 
     private val viewModel: MainViewModel by viewModels()
 
@@ -81,7 +81,7 @@ class TrackingFragment : Fragment(R.layout.fragment_tracking) {
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) = with(binding) {
         super.onViewCreated(view, savedInstanceState)
         val bgLocPermissionLauncher =
             registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
@@ -188,12 +188,14 @@ class TrackingFragment : Fragment(R.layout.fragment_tracking) {
             .show()
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.toolbar_tracking_menu, menu)
         this.menu = menu
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onPrepareOptionsMenu(menu: Menu) {
         super.onPrepareOptionsMenu(menu)
         if (curTimeInMillis > 0L) {
@@ -201,6 +203,7 @@ class TrackingFragment : Fragment(R.layout.fragment_tracking) {
         }
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.miCancelTracking -> showCancelTrackingDialog()
@@ -224,7 +227,7 @@ class TrackingFragment : Fragment(R.layout.fragment_tracking) {
         findNavController().navigate(R.id.action_trackingFragment_to_runFragment)
     }
 
-    private fun updateTracking(isTracking: Boolean) {
+    private fun updateTracking(isTracking: Boolean) = with(binding) {
         currentlyTracking = isTracking
         if (!isTracking) {
             btnToggleRun.text = "Start"
@@ -318,32 +321,32 @@ class TrackingFragment : Fragment(R.layout.fragment_tracking) {
 
     override fun onResume() {
         super.onResume()
-        mapView?.onResume()
+        mapView.onResume()
     }
 
     override fun onStart() {
         super.onStart()
-        mapView?.onStart()
+        mapView.onStart()
     }
 
     override fun onStop() {
         super.onStop()
-        mapView?.onStop()
+        mapView.onStop()
     }
 
     override fun onPause() {
         super.onPause()
-        mapView?.onPause()
+        mapView.onPause()
     }
 
     override fun onLowMemory() {
         super.onLowMemory()
-        mapView?.onLowMemory()
+        mapView.onLowMemory()
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        mapView?.onSaveInstanceState(outState)
+        mapView.onSaveInstanceState(outState)
     }
 
     companion object {

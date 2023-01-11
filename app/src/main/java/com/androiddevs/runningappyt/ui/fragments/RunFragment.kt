@@ -1,6 +1,7 @@
 package com.androiddevs.runningappyt.ui.fragments
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
 import android.widget.AdapterView
 import androidx.fragment.app.Fragment
@@ -9,12 +10,10 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.androiddevs.runningappyt.R
 import com.androiddevs.runningappyt.adapters.RunAdapter
+import com.androiddevs.runningappyt.databinding.FragmentRunBinding
 import com.androiddevs.runningappyt.other.SortType
 import com.androiddevs.runningappyt.ui.viewmodels.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.fragment_run.fab
-import kotlinx.android.synthetic.main.fragment_run.rvRuns
-import kotlinx.android.synthetic.main.fragment_run.spFilter
 
 /**
  * [Fragment] to view details of all finished runs.
@@ -23,6 +22,10 @@ import kotlinx.android.synthetic.main.fragment_run.spFilter
  */
 @AndroidEntryPoint
 class RunFragment : Fragment(R.layout.fragment_run) {
+
+
+    private val binding by lazy { FragmentRunBinding.inflate(LayoutInflater.from(requireContext())) }
+
     private val viewModel: MainViewModel by viewModels()
 
     private val runAdapter: RunAdapter by lazy { RunAdapter() }
@@ -30,7 +33,7 @@ class RunFragment : Fragment(R.layout.fragment_run) {
         super.onCreate(savedInstanceState)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) = with(binding) {
         super.onViewCreated(view, savedInstanceState)
         setupRecyclerView()
 
@@ -70,8 +73,10 @@ class RunFragment : Fragment(R.layout.fragment_run) {
         }
     }
 
-    private fun setupRecyclerView() = rvRuns.apply {
-        adapter = runAdapter
-        layoutManager = LinearLayoutManager(requireContext())
+    private fun setupRecyclerView() = with(binding) {
+        rvRuns.apply {
+            adapter = runAdapter
+            layoutManager = LinearLayoutManager(requireContext())
+        }
     }
 }
