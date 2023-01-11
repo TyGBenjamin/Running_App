@@ -7,5 +7,13 @@
         <item>Average Speed</item>
         <item>Calories Burned</item>
     </string-array>
-    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">ENTER YOUR API KEY HERE</string>
+    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">API KEY HERE</string>
+    <string name="fineLocDialogTest">This app requires access to PRECISE location in order to work.
+        \nPress \'Allow\' to give access.</string>
+    <string name="bgLocDialogText">This app also requires location access at all times in order to track your run.
+        \nTo give access, press \'Allow\' and on the following screen, choose \'Allow all the time.\'</string>
+    <string name="permissionDialogPos">Allow</string>
+    <string name="permissionDialogNeg">Cancel</string>
+    <string name="permissionDialogDeniedText">Required Location permissions were not granted. The run location will not be tracked</string>
+    <string name="permissionDialogDeniedNeg">Ok</string>
 </resources>
