@@ -30,8 +30,6 @@ import pub.devrel.easypermissions.EasyPermissions
 class RunFragment : Fragment(R.layout.fragment_run), EasyPermissions.PermissionCallbacks {
 
     private val binding by lazy { FragmentRunBinding.inflate(LayoutInflater.from(requireContext())) }
-
-
     private val viewModel: MainViewModel by viewModels()
 
     private val runAdapter: RunAdapter by lazy { RunAdapter() }

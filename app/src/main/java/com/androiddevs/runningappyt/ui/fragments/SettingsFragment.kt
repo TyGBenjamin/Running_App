@@ -4,8 +4,8 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.androiddevs.runningappyt.R
 import com.androiddevs.runningappyt.databinding.FragmentSettingsBinding
 import com.androiddevs.runningappyt.other.Constants
 import com.androiddevs.runningappyt.other.Constants.KEY_NAME
@@ -21,12 +21,22 @@ import javax.inject.Inject
  * @constructor instance of [SettingsFragment].
  */
 @AndroidEntryPoint
-class SettingsFragment : Fragment(R.layout.fragment_settings) {
+class SettingsFragment : Fragment() {
 
-    private val binding by lazy { FragmentSettingsBinding.inflate(LayoutInflater.from(requireContext())) }
+    private var _binding: FragmentSettingsBinding? = null
+    val binding: FragmentSettingsBinding get() = _binding!!
 
     @Inject
     lateinit var sharedPreferences: SharedPreferences
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View =
+        FragmentSettingsBinding.inflate(inflater, container, false).also {
+            _binding = it
+        }.root
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) = with(binding) {
         super.onViewCreated(view, savedInstanceState)
