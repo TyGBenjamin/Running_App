@@ -3,6 +3,7 @@ package com.androiddevs.runningappyt.ui.fragments
 import android.Manifest
 import android.os.Build
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
 import android.widget.AdapterView
 import androidx.fragment.app.Fragment
@@ -12,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.androiddevs.runningappyt.R
 import com.androiddevs.runningappyt.adapters.RunAdapter
 import com.androiddevs.runningappyt.databinding.FragmentRunBinding
+import com.androiddevs.runningappyt.databinding.FragmentSettingsBinding
 import com.androiddevs.runningappyt.other.Constants.REQUEST_CODE_LOCATION_PERMISSION
 import com.androiddevs.runningappyt.other.SortType
 import com.androiddevs.runningappyt.other.TrackingUtility
@@ -28,8 +30,8 @@ import pub.devrel.easypermissions.EasyPermissions
 @AndroidEntryPoint
 class RunFragment : Fragment(R.layout.fragment_run), EasyPermissions.PermissionCallbacks {
 
-    private var _binding: FragmentRunBinding? = null
-    val binding: FragmentRunBinding get() = _binding!!
+    private val binding by lazy { FragmentRunBinding.inflate(LayoutInflater.from(requireContext())) }
+
 
     private val viewModel: MainViewModel by viewModels()
 
