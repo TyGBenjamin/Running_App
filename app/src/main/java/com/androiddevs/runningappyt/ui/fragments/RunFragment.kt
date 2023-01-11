@@ -5,6 +5,7 @@ import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.AdapterView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -27,14 +28,22 @@ import pub.devrel.easypermissions.EasyPermissions
  * @constructor Create instance of [RunFragment]
  */
 @AndroidEntryPoint
-class RunFragment : Fragment(R.layout.fragment_run), EasyPermissions.PermissionCallbacks {
+class RunFragment : Fragment(), EasyPermissions.PermissionCallbacks {
 
-    private val binding by lazy { FragmentRunBinding.inflate(LayoutInflater.from(requireContext())) }
-
-
+    private var _binding: FragmentRunBinding? = null
+    val binding: FragmentRunBinding get() = _binding!!
     private val viewModel: MainViewModel by viewModels()
 
     private val runAdapter: RunAdapter by lazy { RunAdapter() }
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View =
+        FragmentRunBinding.inflate(inflater, container, false).also {
+            _binding = it
+        }.root
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) = with(binding) {
         super.onViewCreated(view, savedInstanceState)
