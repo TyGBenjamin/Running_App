@@ -53,7 +53,7 @@ class SetupFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        doShit()
+        initListener()
         if (!isFirstAppOpen) {
             val navOptions = NavOptions.Builder()
                 .setPopUpTo(R.id.setupFragment, true)
@@ -70,8 +70,7 @@ class SetupFragment : Fragment() {
      * Do shit.
      *
      */
-    fun doShit() = with(binding) {
-        tvContinue.text = "oooooooo yeah mother fucker"
+    fun initListener() = with(binding) {
         tvContinue.setOnClickListener {
             println("BUTTONCLICKEd")
             val success = writePersonalDataToSharedPref()
