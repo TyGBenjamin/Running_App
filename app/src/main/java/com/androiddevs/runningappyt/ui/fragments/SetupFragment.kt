@@ -17,8 +17,8 @@ import com.androiddevs.runningappyt.other.Constants.KEY_WEIGHT
 import com.androiddevs.runningappyt.other.showSnack
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.tvToolbarTitle
-import java.util.Locale
 import javax.inject.Inject
+import java.util.Locale
 
 /**
  * [Fragment] to manage user detail entry.
