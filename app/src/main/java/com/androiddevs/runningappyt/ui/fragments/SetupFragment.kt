@@ -4,22 +4,22 @@ package com.androiddevs.runningappyt.ui.fragments
 
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.View.inflate
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.androiddevs.runningappyt.R
+import com.androiddevs.runningappyt.databinding.FragmentSetupBinding
 import com.androiddevs.runningappyt.other.Constants.KEY_FIRST_TIME_TOGGLE
 import com.androiddevs.runningappyt.other.Constants.KEY_NAME
 import com.androiddevs.runningappyt.other.Constants.KEY_WEIGHT
 import com.androiddevs.runningappyt.other.showSnack
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.activity_main.tvToolbarTitle
 import java.util.Locale
 import javax.inject.Inject
-import kotlinx.android.synthetic.main.activity_main.tvToolbarTitle
-import kotlinx.android.synthetic.main.fragment_setup.etName
-import kotlinx.android.synthetic.main.fragment_setup.etWeight
-import kotlinx.android.synthetic.main.fragment_setup.tvContinue
 
 /**
  * [Fragment] to manage user detail entry.
@@ -29,13 +29,18 @@ import kotlinx.android.synthetic.main.fragment_setup.tvContinue
 @AndroidEntryPoint
 class SetupFragment : Fragment(R.layout.fragment_setup) {
 
+    private val binding by lazy { FragmentSetupBinding.inflate(LayoutInflater.from(requireContext())) }
+
+    val etName by lazy { binding.etName }
+    val etWeight by lazy { binding.etWeight }
+
     @Inject
     lateinit var sharedPref: SharedPreferences
 
     @set:Inject
     var isFirstAppOpen = true
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) = with(binding) {
         super.onViewCreated(view, savedInstanceState)
 
         if (!isFirstAppOpen) {

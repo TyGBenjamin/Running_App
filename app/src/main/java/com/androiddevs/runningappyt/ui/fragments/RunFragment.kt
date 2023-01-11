@@ -11,14 +11,12 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.androiddevs.runningappyt.R
 import com.androiddevs.runningappyt.adapters.RunAdapter
+import com.androiddevs.runningappyt.databinding.FragmentRunBinding
 import com.androiddevs.runningappyt.other.Constants.REQUEST_CODE_LOCATION_PERMISSION
 import com.androiddevs.runningappyt.other.SortType
 import com.androiddevs.runningappyt.other.TrackingUtility
 import com.androiddevs.runningappyt.ui.viewmodels.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.fragment_run.fab
-import kotlinx.android.synthetic.main.fragment_run.rvRuns
-import kotlinx.android.synthetic.main.fragment_run.spFilter
 import pub.devrel.easypermissions.AppSettingsDialog
 import pub.devrel.easypermissions.EasyPermissions
 
@@ -30,11 +28,14 @@ import pub.devrel.easypermissions.EasyPermissions
 @AndroidEntryPoint
 class RunFragment : Fragment(R.layout.fragment_run), EasyPermissions.PermissionCallbacks {
 
+    private var _binding: FragmentRunBinding? = null
+    val binding: FragmentRunBinding get() = _binding!!
+
     private val viewModel: MainViewModel by viewModels()
 
     private val runAdapter: RunAdapter by lazy { RunAdapter() }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) = with(binding) {
         super.onViewCreated(view, savedInstanceState)
         requestPermissions()
         setupRecyclerView()
@@ -75,9 +76,11 @@ class RunFragment : Fragment(R.layout.fragment_run), EasyPermissions.PermissionC
         }
     }
 
-    private fun setupRecyclerView() = rvRuns.apply {
-        adapter = runAdapter
-        layoutManager = LinearLayoutManager(requireContext())
+    private fun setupRecyclerView() = with(binding) {
+        rvRuns.apply {
+            adapter = runAdapter
+            layoutManager = LinearLayoutManager(requireContext())
+        }
     }
 
     private fun requestPermissions() {

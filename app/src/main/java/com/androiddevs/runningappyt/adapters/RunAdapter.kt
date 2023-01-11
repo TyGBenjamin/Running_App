@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.androiddevs.runningappyt.R
+import com.androiddevs.runningappyt.databinding.ItemRunBinding
 import com.androiddevs.runningappyt.db.Run
 import com.androiddevs.runningappyt.other.Constants
 import com.androiddevs.runningappyt.other.TrackingUtility
@@ -16,12 +17,6 @@ import com.bumptech.glide.Glide
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
-import kotlinx.android.synthetic.main.item_run.view.ivRunImage
-import kotlinx.android.synthetic.main.item_run.view.tvAvgSpeed
-import kotlinx.android.synthetic.main.item_run.view.tvCalories
-import kotlinx.android.synthetic.main.item_run.view.tvDate
-import kotlinx.android.synthetic.main.item_run.view.tvDistance
-import kotlinx.android.synthetic.main.item_run.view.tvTime
 
 /**
  * [RecyclerView.Adapter] to display [List] of [Run].
@@ -29,6 +24,15 @@ import kotlinx.android.synthetic.main.item_run.view.tvTime
  * @constructor Create instance of [RunAdapter]
  */
 class RunAdapter : RecyclerView.Adapter<RunAdapter.RunViewHolder>() {
+
+    private var _binding: ItemRunBinding? = null
+    private val binding: ItemRunBinding get() = _binding!!
+
+    private val tvAvgSpeed by lazy { binding.tvAvgSpeed }
+    private val tvDate by lazy { binding.tvDate }
+    private val tvCalories by lazy { binding.tvCalories }
+    private val tvDistance by lazy { binding.tvDistance }
+    private val ivRunImage by lazy { binding.ivRunImage }
 
     /**
      * Run view holder.
@@ -75,24 +79,24 @@ class RunAdapter : RecyclerView.Adapter<RunAdapter.RunViewHolder>() {
     override fun onBindViewHolder(holder: RunViewHolder, position: Int) {
         val run = differ.currentList[position]
         holder.itemView.apply {
-            Glide.with(this).load(run.img).into(ivRunImage)
+            Glide.with(this).load(run.img).into(binding.ivRunImage)
 
             val calendar = Calendar.getInstance().apply {
                 timeInMillis = run.timestamp
             }
             val dateFormat = SimpleDateFormat("dd.MM.yy", Locale.getDefault())
-            tvDate.text = dateFormat.format(calendar.time)
+            binding.tvDate.text = dateFormat.format(calendar.time)
 
             val avgSpeed = "${run.avgSpeedInKMH}km/h"
-            tvAvgSpeed.text = avgSpeed
+            binding.tvAvgSpeed.text = avgSpeed
 
             val distanceInKm = "${run.distanceInMeters / Constants.Float.THOUSAND}km"
-            tvDistance.text = distanceInKm
+            binding.tvDistance.text = distanceInKm
 
-            tvTime.text = TrackingUtility.getFormattedStopWatchTime(run.timeInMillis)
+            binding.tvTime.text = TrackingUtility.getFormattedStopWatchTime(run.timeInMillis)
 
             val caloriesBurned = "${run.caloriesBurned}kcal"
-            tvCalories.text = caloriesBurned
+            binding.tvCalories.text = caloriesBurned
         }
     }
 }
