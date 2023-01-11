@@ -30,6 +30,7 @@ class RunAdapter : RecyclerView.Adapter<RunAdapter.RunViewHolder>() {
 
     private val tvAvgSpeed by lazy { binding.tvAvgSpeed }
     private val tvDate by lazy { binding.tvDate }
+    private val tvTime by lazy { binding.tvTime }
     private val tvCalories by lazy { binding.tvCalories }
     private val tvDistance by lazy { binding.tvDistance }
     private val ivRunImage by lazy { binding.ivRunImage }
@@ -79,24 +80,24 @@ class RunAdapter : RecyclerView.Adapter<RunAdapter.RunViewHolder>() {
     override fun onBindViewHolder(holder: RunViewHolder, position: Int) {
         val run = differ.currentList[position]
         holder.itemView.apply {
-            Glide.with(this).load(run.img).into(binding.ivRunImage)
+            Glide.with(this).load(run.img).into(ivRunImage)
 
             val calendar = Calendar.getInstance().apply {
                 timeInMillis = run.timestamp
             }
             val dateFormat = SimpleDateFormat("dd.MM.yy", Locale.getDefault())
-            binding.tvDate.text = dateFormat.format(calendar.time)
+            tvDate.text = dateFormat.format(calendar.time)
 
             val avgSpeed = "${run.avgSpeedInKMH}km/h"
-            binding.tvAvgSpeed.text = avgSpeed
+            tvAvgSpeed.text = avgSpeed
 
             val distanceInKm = "${run.distanceInMeters / Constants.Float.THOUSAND}km"
-            binding.tvDistance.text = distanceInKm
+            tvDistance.text = distanceInKm
 
-            binding.tvTime.text = TrackingUtility.getFormattedStopWatchTime(run.timeInMillis)
+            tvTime.text = TrackingUtility.getFormattedStopWatchTime(run.timeInMillis)
 
             val caloriesBurned = "${run.caloriesBurned}kcal"
-            binding.tvCalories.text = caloriesBurned
+            tvCalories.text = caloriesBurned
         }
     }
 }
