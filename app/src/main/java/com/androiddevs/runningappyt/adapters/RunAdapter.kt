@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.androiddevs.runningappyt.R
+import com.androiddevs.runningappyt.databinding.ItemRunBinding
 import com.androiddevs.runningappyt.db.Run
 import com.androiddevs.runningappyt.other.Constants
 import com.androiddevs.runningappyt.other.TrackingUtility
@@ -16,12 +17,6 @@ import com.bumptech.glide.Glide
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
-import kotlinx.android.synthetic.main.item_run.view.ivRunImage
-import kotlinx.android.synthetic.main.item_run.view.tvAvgSpeed
-import kotlinx.android.synthetic.main.item_run.view.tvCalories
-import kotlinx.android.synthetic.main.item_run.view.tvDate
-import kotlinx.android.synthetic.main.item_run.view.tvDistance
-import kotlinx.android.synthetic.main.item_run.view.tvTime
 
 /**
  * [RecyclerView.Adapter] to display [List] of [Run].
@@ -29,6 +24,16 @@ import kotlinx.android.synthetic.main.item_run.view.tvTime
  * @constructor Create instance of [RunAdapter]
  */
 class RunAdapter : RecyclerView.Adapter<RunAdapter.RunViewHolder>() {
+
+    private var _binding: ItemRunBinding? = null
+    private val binding: ItemRunBinding get() = _binding!!
+
+    private val tvAvgSpeed by lazy { binding.tvAvgSpeed }
+    private val tvDate by lazy { binding.tvDate }
+    private val tvTime by lazy { binding.tvTime }
+    private val tvCalories by lazy { binding.tvCalories }
+    private val tvDistance by lazy { binding.tvDistance }
+    private val ivRunImage by lazy { binding.ivRunImage }
 
     /**
      * Run view holder.
