@@ -8,13 +8,14 @@ import com.androiddevs.runningappyt.R
 import com.androiddevs.runningappyt.other.Constants
 import com.androiddevs.runningappyt.other.Constants.KEY_NAME
 import com.androiddevs.runningappyt.other.Constants.KEY_WEIGHT
+import com.androiddevs.runningappyt.other.Constants.RADIO_LIGHT_MODE
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 import kotlinx.android.synthetic.main.activity_main.tvToolbarTitle
 import kotlinx.android.synthetic.main.fragment_settings.btnApplyChanges
 import kotlinx.android.synthetic.main.fragment_settings.etName
 import kotlinx.android.synthetic.main.fragment_settings.etWeight
-import javax.inject.Inject
 
 /**
  * [Fragment] to manage all user settings.
@@ -50,12 +51,16 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
     private fun applyChangesToSharedPref(): Boolean {
         val nameText = etName.text.toString()
         val weightText = etWeight.text.toString()
+        val radioLightMode = true
+
         if (nameText.isEmpty() || weightText.isEmpty()) {
             return false
         }
+
         sharedPreferences.edit()
             .putString(KEY_NAME, nameText)
             .putFloat(KEY_WEIGHT, weightText.toFloat())
+            .putBoolean(RADIO_LIGHT_MODE, radioLightMode)
             .apply()
         val toolbarText = "Let's go $nameText"
         requireActivity().tvToolbarTitle.text = toolbarText
