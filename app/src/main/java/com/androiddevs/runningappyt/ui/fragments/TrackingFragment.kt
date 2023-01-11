@@ -49,8 +49,9 @@ import java.util.Calendar
  * @constructor Create instance of [TrackingFragment]
  */
 @AndroidEntryPoint
-class TrackingFragment : Fragment(R.layout.fragment_tracking) {
-    private val binding by lazy { FragmentTrackingBinding.inflate(LayoutInflater.from(requireContext())) }
+class TrackingFragment : Fragment() {
+    private var _binding: FragmentTrackingBinding? = null
+    val binding: FragmentTrackingBinding get() = _binding!!
     val tvTimer by lazy { binding.tvTimer }
     val mapView by lazy { binding.mapView }
 
@@ -76,10 +77,10 @@ class TrackingFragment : Fragment(R.layout.fragment_tracking) {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        setHasOptionsMenu(true)
-        return super.onCreateView(inflater, container, savedInstanceState)
-    }
+    ): View =
+        FragmentTrackingBinding.inflate(inflater, container, false).also {
+            _binding = it
+        }.root
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) = with(binding) {
         super.onViewCreated(view, savedInstanceState)
