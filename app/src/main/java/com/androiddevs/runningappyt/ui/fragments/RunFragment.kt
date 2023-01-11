@@ -22,7 +22,6 @@ import dagger.hilt.android.AndroidEntryPoint
  * @constructor Create instance of [RunFragment]
  */
 @AndroidEntryPoint
-
 class RunFragment : Fragment() {
 
     private var _binding: FragmentRunBinding? = null
