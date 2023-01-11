@@ -22,8 +22,6 @@ import dagger.hilt.android.AndroidEntryPoint
  */
 @AndroidEntryPoint
 class RunFragment : Fragment(R.layout.fragment_run) {
-
-
     private val binding by lazy { FragmentRunBinding.inflate(LayoutInflater.from(requireContext())) }
 
     private val viewModel: MainViewModel by viewModels()
