@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.androiddevs.runningappyt.R
 import com.androiddevs.runningappyt.adapters.RunAdapter
 import com.androiddevs.runningappyt.databinding.FragmentRunBinding
-import com.androiddevs.runningappyt.databinding.FragmentSettingsBinding
 import com.androiddevs.runningappyt.other.Constants.REQUEST_CODE_LOCATION_PERMISSION
 import com.androiddevs.runningappyt.other.SortType
 import com.androiddevs.runningappyt.other.TrackingUtility
