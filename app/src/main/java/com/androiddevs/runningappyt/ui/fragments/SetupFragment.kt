@@ -29,7 +29,6 @@ import java.util.Locale
 @AndroidEntryPoint
 class SetupFragment : Fragment() {
 
-//    private val binding by lazy { FragmentSetupBinding.inflate(LayoutInflater.from(context)) }
     private var _binding: FragmentSetupBinding? = null
     val binding: FragmentSetupBinding get() = _binding!!
 
