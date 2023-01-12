@@ -4,22 +4,22 @@ package com.androiddevs.runningappyt.ui.fragments
 
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.androiddevs.runningappyt.R
+import com.androiddevs.runningappyt.databinding.FragmentSetupBinding
 import com.androiddevs.runningappyt.other.Constants.KEY_FIRST_TIME_TOGGLE
 import com.androiddevs.runningappyt.other.Constants.KEY_NAME
 import com.androiddevs.runningappyt.other.Constants.KEY_WEIGHT
 import com.androiddevs.runningappyt.other.showSnack
 import dagger.hilt.android.AndroidEntryPoint
-import java.util.Locale
-import javax.inject.Inject
 import kotlinx.android.synthetic.main.activity_main.tvToolbarTitle
-import kotlinx.android.synthetic.main.fragment_setup.etName
-import kotlinx.android.synthetic.main.fragment_setup.etWeight
-import kotlinx.android.synthetic.main.fragment_setup.tvContinue
+import javax.inject.Inject
+import java.util.Locale
 
 /**
  * [Fragment] to manage user detail entry.
@@ -27,7 +27,13 @@ import kotlinx.android.synthetic.main.fragment_setup.tvContinue
  * @constructor Create instance of [SetupFragment]
  */
 @AndroidEntryPoint
-class SetupFragment : Fragment(R.layout.fragment_setup) {
+class SetupFragment : Fragment() {
+
+    private var _binding: FragmentSetupBinding? = null
+    val binding: FragmentSetupBinding get() = _binding!!
+
+    val etName by lazy { binding.etName }
+    val etWeight by lazy { binding.etWeight }
 
     @Inject
     lateinit var sharedPref: SharedPreferences
@@ -35,9 +41,18 @@ class SetupFragment : Fragment(R.layout.fragment_setup) {
     @set:Inject
     var isFirstAppOpen = true
 
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View =
+        FragmentSetupBinding.inflate(inflater, container, false).also {
+            _binding = it
+        }.root
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        initListener()
         if (!isFirstAppOpen) {
             val navOptions = NavOptions.Builder()
                 .setPopUpTo(R.id.setupFragment, true)
@@ -48,8 +63,15 @@ class SetupFragment : Fragment(R.layout.fragment_setup) {
                 navOptions
             )
         }
+    }
 
+    /**
+     * Do shit.
+     *
+     */
+    fun initListener() = with(binding) {
         tvContinue.setOnClickListener {
+            println("BUTTONCLICKEd")
             val success = writePersonalDataToSharedPref()
             if (success) {
                 findNavController().navigate(R.id.action_setupFragment_to_runFragment)
@@ -70,5 +92,10 @@ class SetupFragment : Fragment(R.layout.fragment_setup) {
         requireActivity().tvToolbarTitle.text =
             String.format(Locale.getDefault(), "Let's go, %s", name)
         return true
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
     }
 }

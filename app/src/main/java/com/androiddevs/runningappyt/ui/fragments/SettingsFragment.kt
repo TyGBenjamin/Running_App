@@ -4,9 +4,11 @@ package com.androiddevs.runningappyt.ui.fragments
 
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.androiddevs.runningappyt.R
+import com.androiddevs.runningappyt.databinding.FragmentSettingsBinding
 import com.androiddevs.runningappyt.other.Constants
 import com.androiddevs.runningappyt.other.Constants.KEY_NAME
 import com.androiddevs.runningappyt.other.Constants.KEY_WEIGHT
@@ -17,12 +19,16 @@ import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 import kotlinx.android.synthetic.main.activity_main.tvToolbarTitle
+<<<<<<< HEAD
 import kotlinx.android.synthetic.main.fragment_settings.btnApplyChanges
 import kotlinx.android.synthetic.main.fragment_settings.etName
 import kotlinx.android.synthetic.main.fragment_settings.etWeight
 import kotlinx.android.synthetic.main.fragment_settings.radioDarkMode
 import kotlinx.android.synthetic.main.fragment_settings.radioDefaultMode
 import kotlinx.android.synthetic.main.fragment_settings.radioLightMode
+=======
+import javax.inject.Inject
+>>>>>>> 2a5fd6a487fd58bafea0f9ec225d44e6deaf48ea
 
 /**
  * [Fragment] to manage all user settings.
@@ -30,12 +36,24 @@ import kotlinx.android.synthetic.main.fragment_settings.radioLightMode
  * @constructor instance of [SettingsFragment].
  */
 @AndroidEntryPoint
-class SettingsFragment : Fragment(R.layout.fragment_settings) {
+class SettingsFragment : Fragment() {
+
+    private var _binding: FragmentSettingsBinding? = null
+    val binding: FragmentSettingsBinding get() = _binding!!
 
     @Inject
     lateinit var sharedPreferences: SharedPreferences
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View =
+        FragmentSettingsBinding.inflate(inflater, container, false).also {
+            _binding = it
+        }.root
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) = with(binding) {
         super.onViewCreated(view, savedInstanceState)
         loadFieldsFromSharedPref()
         btnApplyChanges.setOnClickListener {
@@ -48,7 +66,7 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
         }
     }
 
-    private fun loadFieldsFromSharedPref() {
+    private fun loadFieldsFromSharedPref() = with(binding) {
         val name = sharedPreferences.getString(KEY_NAME, "")
         val weight = sharedPreferences.getFloat(KEY_WEIGHT, Constants.Default.WEIGHT)
         val defaultMode = sharedPreferences.getBoolean(RADIO_DEFAULT_MODE, false)
@@ -61,7 +79,7 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
         etWeight.setText(weight.toString())
     }
 
-    private fun applyChangesToSharedPref(): Boolean {
+    private fun applyChangesToSharedPref(): Boolean = with(binding) {
         val nameText = etName.text.toString()
         val weightText = etWeight.text.toString()
         val radioDefaultMode = radioDefaultMode.isChecked

@@ -4,11 +4,14 @@ package com.androiddevs.runningappyt.ui.fragments
 
 import android.graphics.Color
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.androiddevs.runningappyt.R
+import com.androiddevs.runningappyt.databinding.FragmentStatisticsBinding
 import com.androiddevs.runningappyt.other.Constants.Float.TEN
 import com.androiddevs.runningappyt.other.Constants.Float.THOUSAND
 import com.androiddevs.runningappyt.other.CustomMarkerView
@@ -19,13 +22,8 @@ import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
 import dagger.hilt.android.AndroidEntryPoint
-import java.util.Locale
 import kotlin.math.round
-import kotlinx.android.synthetic.main.fragment_statistics.barChart
-import kotlinx.android.synthetic.main.fragment_statistics.tvAverageSpeed
-import kotlinx.android.synthetic.main.fragment_statistics.tvTotalCalories
-import kotlinx.android.synthetic.main.fragment_statistics.tvTotalDistance
-import kotlinx.android.synthetic.main.fragment_statistics.tvTotalTime
+import java.util.Locale
 
 /**
  * [Fragment] to manage all run statistics.
@@ -33,9 +31,19 @@ import kotlinx.android.synthetic.main.fragment_statistics.tvTotalTime
  * @constructor Create instance of [StatisticsFragment]
  */
 @AndroidEntryPoint
-class StatisticsFragment : Fragment(R.layout.fragment_statistics) {
-
+class StatisticsFragment : Fragment() {
+    private var _binding: FragmentStatisticsBinding? = null
+    val binding: FragmentStatisticsBinding get() = _binding!!
     private val viewModel: StatisticsViewModel by viewModels()
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View =
+        FragmentStatisticsBinding.inflate(inflater, container, false).also {
+            _binding = it
+        }.root
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -43,7 +51,7 @@ class StatisticsFragment : Fragment(R.layout.fragment_statistics) {
         setupBarChart()
     }
 
-    private fun setupBarChart() {
+    private fun setupBarChart() = with(binding) {
         barChart.xAxis.apply {
             position = XAxis.XAxisPosition.BOTTOM
             setDrawLabels(false)
@@ -67,7 +75,7 @@ class StatisticsFragment : Fragment(R.layout.fragment_statistics) {
         }
     }
 
-    private fun subscribeToObservers() {
+    private fun subscribeToObservers() = with(binding) {
         viewModel.totalTimeRun.observe(viewLifecycleOwner) { totalTimeRun: Long ->
             tvTotalTime.text = TrackingUtility.getFormattedStopWatchTime(totalTimeRun)
         }

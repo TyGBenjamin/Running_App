@@ -11,14 +11,17 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.androiddevs.runningappyt.R
+import com.androiddevs.runningappyt.databinding.ActivityMainBinding
 import com.androiddevs.runningappyt.other.Constants.ACTION_SHOW_TRACKING_FRAGMENT
 import com.androiddevs.runningappyt.other.Constants.RADIO_DARK_MODE
 import com.androiddevs.runningappyt.other.Constants.RADIO_LIGHT_MODE
 import dagger.hilt.android.AndroidEntryPoint
+<<<<<<< HEAD
 import javax.inject.Inject
 import kotlinx.android.synthetic.main.activity_main.bottomNavigationView
+=======
+>>>>>>> 2a5fd6a487fd58bafea0f9ec225d44e6deaf48ea
 import kotlinx.android.synthetic.main.activity_main.navHostFragment
-import kotlinx.android.synthetic.main.activity_main.toolbar
 
 /**
  * [AppCompatActivity] to host toolbar, bottom navigation and fragments.
@@ -26,7 +29,9 @@ import kotlinx.android.synthetic.main.activity_main.toolbar
  * @constructor Create instance of [MainActivity]
  */
 @AndroidEntryPoint
+@Suppress("LateinitUsage")
 class MainActivity : AppCompatActivity() {
+<<<<<<< HEAD
     @Inject
     lateinit var sharedPreferences: SharedPreferences
 
@@ -51,17 +56,25 @@ class MainActivity : AppCompatActivity() {
 
         setContentView(R.layout.activity_main)
 
+=======
+    private lateinit var binding: ActivityMainBinding
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+>>>>>>> 2a5fd6a487fd58bafea0f9ec225d44e6deaf48ea
         navigateToTrackingFragmentIfNeeded(intent)
 
-        setSupportActionBar(toolbar)
-        bottomNavigationView.setupWithNavController(navHostFragment.findNavController())
+        setSupportActionBar(binding.toolbar)
+        binding.bottomNavigationView.setupWithNavController(navHostFragment.findNavController())
 
         navHostFragment.findNavController()
             .addOnDestinationChangedListener { _, destination, _ ->
                 when (destination.id) {
                     R.id.settingsFragment, R.id.runFragment, R.id.statisticsFragment ->
-                        bottomNavigationView.visibility = View.VISIBLE
-                    else -> bottomNavigationView.visibility = View.GONE
+                        binding.bottomNavigationView.visibility = View.VISIBLE
+                    else -> binding.bottomNavigationView.visibility = View.GONE
                 }
             }
     }
