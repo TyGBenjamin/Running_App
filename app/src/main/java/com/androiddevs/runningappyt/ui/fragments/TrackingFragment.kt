@@ -2,7 +2,9 @@
 
 package com.androiddevs.runningappyt.ui.fragments
 
+import android.Manifest
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.Menu
@@ -10,6 +12,8 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -65,6 +69,10 @@ class TrackingFragment : Fragment() {
     @set:Inject
     var weight = 80f
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -76,6 +84,23 @@ class TrackingFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) = with(binding) {
         super.onViewCreated(view, savedInstanceState)
+        val bgLocPermissionLauncher =
+            registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
+                if (!isGranted) showDeniedPermissionDialog()
+            }
+        val fineLocPermissionLauncher =
+            registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissionMap ->
+                if (
+                    Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q &&
+                    permissionMap[Manifest.permission.ACCESS_FINE_LOCATION]!!
+                ) {
+                    checkPermissions(null, bgLocPermissionLauncher)
+                } else if (!permissionMap[Manifest.permission.ACCESS_FINE_LOCATION]!!) {
+                    showDeniedPermissionDialog()
+                }
+            }
+        checkPermissions(fineLocPermissionLauncher, bgLocPermissionLauncher)
+
         mapView.onCreate(savedInstanceState)
         btnToggleRun.setOnClickListener {
             toggleRun()
@@ -116,6 +141,52 @@ class TrackingFragment : Fragment() {
         } else {
             sendCommandToService(ACTION_START_OR_RESUME_SERVICE)
         }
+    }
+
+    private fun checkPermissions(
+        fineLocLauncher: ActivityResultLauncher<Array<String>>?,
+        bgLocLauncher: ActivityResultLauncher<String>
+    ) {
+        if (TrackingUtility.hasLocationPermissions(requireContext())) {
+            return
+        }
+        val permissionDialog =
+            MaterialAlertDialogBuilder(requireContext(), R.style.AlertDialogTheme)
+        if (
+            fineLocLauncher != null &&
+            !TrackingUtility.checkPermissions(
+                requireContext(),
+                listOf(Manifest.permission.ACCESS_FINE_LOCATION)
+            )
+        ) {
+            permissionDialog.setMessage(getString(R.string.fineLocDialogTest))
+            permissionDialog.setPositiveButton(getString(R.string.permissionDialogPos)) { _, _ ->
+                fineLocLauncher!!.launch(
+                    arrayOf(
+                        Manifest.permission.ACCESS_FINE_LOCATION,
+                        Manifest.permission.ACCESS_COARSE_LOCATION
+                    )
+                )
+            }
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            permissionDialog.setMessage(getString(R.string.bgLocDialogText))
+            permissionDialog.setPositiveButton(getString(R.string.permissionDialogPos)) { _, _ ->
+                bgLocLauncher.launch(Manifest.permission.ACCESS_BACKGROUND_LOCATION)
+            }
+        }
+        permissionDialog.setNegativeButton(getString(R.string.permissionDialogNeg)) { _, _ -> }
+            .create()
+            .show()
+    }
+
+    private fun showDeniedPermissionDialog() {
+        MaterialAlertDialogBuilder(requireContext(), R.style.AlertDialogTheme)
+            .setMessage(getString(R.string.permissionDialogDeniedText))
+            .setNegativeButton(getString(R.string.permissionDialogDeniedNeg)) { dialogInterface, _ ->
+                dialogInterface.cancel()
+            }
+            .create()
+            .show()
     }
 
     @Deprecated("Deprecated in Java")
