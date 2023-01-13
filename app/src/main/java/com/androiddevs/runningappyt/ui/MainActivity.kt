@@ -16,11 +16,7 @@ import com.androiddevs.runningappyt.other.Constants.ACTION_SHOW_TRACKING_FRAGMEN
 import com.androiddevs.runningappyt.other.Constants.RADIO_DARK_MODE
 import com.androiddevs.runningappyt.other.Constants.RADIO_LIGHT_MODE
 import dagger.hilt.android.AndroidEntryPoint
-<<<<<<< HEAD
 import javax.inject.Inject
-import kotlinx.android.synthetic.main.activity_main.bottomNavigationView
-=======
->>>>>>> 2a5fd6a487fd58bafea0f9ec225d44e6deaf48ea
 import kotlinx.android.synthetic.main.activity_main.navHostFragment
 
 /**
@@ -31,62 +27,57 @@ import kotlinx.android.synthetic.main.activity_main.navHostFragment
 @AndroidEntryPoint
 @Suppress("LateinitUsage")
 class MainActivity : AppCompatActivity() {
-<<<<<<< HEAD
-    @Inject
-    lateinit var sharedPreferences: SharedPreferences
+  @Inject
+  lateinit var sharedPreferences: SharedPreferences
+  private lateinit var binding: ActivityMainBinding
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        val lightMode = sharedPreferences.getBoolean(RADIO_LIGHT_MODE, false)
-        val darkMode = sharedPreferences.getBoolean(RADIO_DARK_MODE, false)
+  override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
+    val lightMode = sharedPreferences.getBoolean(RADIO_LIGHT_MODE, false)
+    val darkMode = sharedPreferences.getBoolean(RADIO_DARK_MODE, false)
 
-        if (darkMode) {
-            setTheme(R.style.DarkTheme)
-        } else if (lightMode) {
-            setTheme(R.style.LightTheme)
-        } else {
-            when (applicationContext.resources?.configuration?.uiMode?.and(Configuration.UI_MODE_NIGHT_MASK)) {
-                Configuration.UI_MODE_NIGHT_YES ->
-                    setTheme(R.style.DarkTheme)
+    if (darkMode) {
+      setTheme(R.style.DarkTheme)
+    } else if (lightMode) {
+      setTheme(R.style.LightTheme)
+    } else {
+      when (applicationContext.resources?.configuration?.uiMode?.and(
+        Configuration.UI_MODE_NIGHT_MASK)) {
+        Configuration.UI_MODE_NIGHT_YES ->
+          setTheme(R.style.DarkTheme)
 
-                Configuration.UI_MODE_NIGHT_NO ->
-                    setTheme(R.style.LightTheme)
-            }
+        Configuration.UI_MODE_NIGHT_NO ->
+          setTheme(R.style.LightTheme)
+      }
+    }
+
+    binding = ActivityMainBinding.inflate(layoutInflater)
+    setContentView(binding.root)
+    navigateToTrackingFragmentIfNeeded(intent)
+
+    setSupportActionBar(binding.toolbar)
+    binding.bottomNavigationView.setupWithNavController(
+      navHostFragment.findNavController())
+
+    navHostFragment.findNavController()
+      .addOnDestinationChangedListener { _, destination, _ ->
+        when (destination.id) {
+          R.id.settingsFragment, R.id.runFragment, R.id.statisticsFragment ->
+            binding.bottomNavigationView.visibility = View.VISIBLE
+          else -> binding.bottomNavigationView.visibility = View.GONE
         }
+      }
+  }
 
-        setContentView(R.layout.activity_main)
+  override fun onNewIntent(intent: Intent?) {
+    super.onNewIntent(intent)
+    navigateToTrackingFragmentIfNeeded(intent)
+  }
 
-=======
-    private lateinit var binding: ActivityMainBinding
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
->>>>>>> 2a5fd6a487fd58bafea0f9ec225d44e6deaf48ea
-        navigateToTrackingFragmentIfNeeded(intent)
-
-        setSupportActionBar(binding.toolbar)
-        binding.bottomNavigationView.setupWithNavController(navHostFragment.findNavController())
-
-        navHostFragment.findNavController()
-            .addOnDestinationChangedListener { _, destination, _ ->
-                when (destination.id) {
-                    R.id.settingsFragment, R.id.runFragment, R.id.statisticsFragment ->
-                        binding.bottomNavigationView.visibility = View.VISIBLE
-                    else -> binding.bottomNavigationView.visibility = View.GONE
-                }
-            }
+  private fun navigateToTrackingFragmentIfNeeded(intent: Intent?) {
+    if (intent?.action == ACTION_SHOW_TRACKING_FRAGMENT) {
+      navHostFragment.findNavController()
+        .navigate(R.id.action_global_trackingFragment)
     }
-
-    override fun onNewIntent(intent: Intent?) {
-        super.onNewIntent(intent)
-        navigateToTrackingFragmentIfNeeded(intent)
-    }
-
-    private fun navigateToTrackingFragmentIfNeeded(intent: Intent?) {
-        if (intent?.action == ACTION_SHOW_TRACKING_FRAGMENT) {
-            navHostFragment.findNavController().navigate(R.id.action_global_trackingFragment)
-        }
-    }
+  }
 }

@@ -7,8 +7,6 @@
         <item>Average Speed</item>
         <item>Calories Burned</item>
     </string-array>
-<<<<<<< HEAD
-    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">ENTER YOUR API KEY HERE</string>
     <string name="Mode">Mode</string>
     <string name="light_mode">Light Mode</string>
     <string name="dark_mode">Dark Mode</string>
@@ -16,7 +14,6 @@
     <string name="apply_changes">Apply Changes</string>
     <string name="your_weight">Your Weight</string>
     <string name="your_name">Your Name</string>
-=======
     <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">API KEY HERE</string>
     <string name="fineLocDialogTest">This app requires access to PRECISE location in order to work.
         \nPress \'Allow\' to give access.</string>
@@ -26,5 +23,4 @@
     <string name="permissionDialogNeg">Cancel</string>
     <string name="permissionDialogDeniedText">Required Location permissions were not granted. The run location will not be tracked</string>
     <string name="permissionDialogDeniedNeg">Ok</string>
->>>>>>> 2a5fd6a487fd58bafea0f9ec225d44e6deaf48ea
 </resources>
