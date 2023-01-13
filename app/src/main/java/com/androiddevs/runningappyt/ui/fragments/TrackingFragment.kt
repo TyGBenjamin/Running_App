@@ -3,9 +3,12 @@
 package com.androiddevs.runningappyt.ui.fragments
 
 import android.Manifest
+import android.content.Context
 import android.content.Intent
+import android.location.LocationManager
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
@@ -77,10 +80,12 @@ class TrackingFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View =
-        FragmentTrackingBinding.inflate(inflater, container, false).also {
+    ): View {
+        setHasOptionsMenu(true)
+        return FragmentTrackingBinding.inflate(inflater, container, false).also {
             _binding = it
         }.root
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) = with(binding) {
         super.onViewCreated(view, savedInstanceState)
@@ -90,20 +95,20 @@ class TrackingFragment : Fragment() {
             }
         val fineLocPermissionLauncher =
             registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissionMap ->
-                if (
-                    Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q &&
-                    permissionMap[Manifest.permission.ACCESS_FINE_LOCATION]!!
-                ) {
-                    checkPermissions(null, bgLocPermissionLauncher)
-                } else if (!permissionMap[Manifest.permission.ACCESS_FINE_LOCATION]!!) {
+                if (!permissionMap[Manifest.permission.ACCESS_FINE_LOCATION]!!) {
                     showDeniedPermissionDialog()
+                } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                    checkLocPermissions(null, bgLocPermissionLauncher)
                 }
             }
-        checkPermissions(fineLocPermissionLauncher, bgLocPermissionLauncher)
-
+        checkLocPermissions(fineLocPermissionLauncher, bgLocPermissionLauncher)
         mapView.onCreate(savedInstanceState)
         btnToggleRun.setOnClickListener {
-            toggleRun()
+            if (curTimeInMillis == 0L && TrackingUtility.hasLocationPermissions(requireContext())) {
+                checkLocationEnabled()
+            } else {
+                toggleRun()
+            }
         }
 
         btnFinishRun.setOnClickListener {
@@ -143,7 +148,7 @@ class TrackingFragment : Fragment() {
         }
     }
 
-    private fun checkPermissions(
+    private fun checkLocPermissions(
         fineLocLauncher: ActivityResultLauncher<Array<String>>?,
         bgLocLauncher: ActivityResultLauncher<String>
     ) {
@@ -161,7 +166,7 @@ class TrackingFragment : Fragment() {
         ) {
             permissionDialog.setMessage(getString(R.string.fineLocDialogTest))
             permissionDialog.setPositiveButton(getString(R.string.permissionDialogPos)) { _, _ ->
-                fineLocLauncher!!.launch(
+                fineLocLauncher.launch(
                     arrayOf(
                         Manifest.permission.ACCESS_FINE_LOCATION,
                         Manifest.permission.ACCESS_COARSE_LOCATION
@@ -174,9 +179,24 @@ class TrackingFragment : Fragment() {
                 bgLocLauncher.launch(Manifest.permission.ACCESS_BACKGROUND_LOCATION)
             }
         }
-        permissionDialog.setNegativeButton(getString(R.string.permissionDialogNeg)) { _, _ -> }
+        permissionDialog.setNegativeButton(getString(R.string.dialogCancel)) { _, _ -> }
             .create()
             .show()
+    }
+
+    private fun checkLocationEnabled() {
+        val locationManager =
+            requireContext().getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+            MaterialAlertDialogBuilder(requireContext(), R.style.AlertDialogTheme)
+                .setMessage(getString(R.string.locServiceDialogText))
+                .setNegativeButton(getString(R.string.dialogCancel)) { _, _ -> }
+                .setPositiveButton(getString(R.string.startRun)) { _, _ -> toggleRun() }
+                .create()
+                .show()
+        } else {
+            toggleRun()
+        }
     }
 
     private fun showDeniedPermissionDialog() {
@@ -194,6 +214,7 @@ class TrackingFragment : Fragment() {
         super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.toolbar_tracking_menu, menu)
         this.menu = menu
+        Log.e("%%%%%%%%%%%%", "$menu")
     }
 
     @Deprecated("Deprecated in Java")
