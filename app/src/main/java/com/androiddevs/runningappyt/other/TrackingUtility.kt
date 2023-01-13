@@ -6,6 +6,7 @@ import android.Manifest
 import android.content.Context
 import android.content.pm.PackageManager
 import android.location.Location
+import android.location.LocationManager
 import android.os.Build
 import androidx.core.content.ContextCompat
 import com.androiddevs.runningappyt.services.Polyline
@@ -58,6 +59,18 @@ object TrackingUtility {
                 permission
             ) == PackageManager.PERMISSION_GRANTED
         }.all { it }
+
+    /**
+     * Checks if location service is turned on.
+     *
+     * @param context
+     * @return true if location is on
+     */
+    fun locationOn(context: Context): Boolean {
+        val locationManager =
+            context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
+    }
 
     /**
      * Calculate length of polyline.
