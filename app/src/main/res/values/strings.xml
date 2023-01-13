@@ -27,7 +27,7 @@
     <string name="startRun">Start Run</string>
     <string name="finish_run">Finish run</string>
     <string name="start">Start</string>
-    <string name="_00_00_00">00:00:00</string>
+    <string name="zero_time_short">00:00:00</string>
     <string name="total_distance">Total Distance</string>
     <string name="running_app">Running App</string>
     <string name="sort_by">Sort by:</string>
@@ -40,7 +40,7 @@
     <string name="_0kcal">0kcal</string>
     <string name="average_speed">Average Speed</string>
     <string name="_0km_h">0km/h</string>
-    <string name="_00_00_00_00">00:00:00:00</string>
+    <string name="zero_time_long">00:00:00:00</string>
     <string name="let_s_go_username">Let\'s go, USERNAME!</string>
     <string name="calories">CALORIES</string>
     <string name="avgspeed">AVGSPEED</string>

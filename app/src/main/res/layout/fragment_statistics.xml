@@ -42,7 +42,7 @@
         android:id="@+id/tvTotalTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/_00_00_00"
+        android:text="@string/zero_time_short"
         android:textSize="40sp"
         app:layout_constraintBottom_toTopOf="@+id/tvTotalTimeInfo"
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
