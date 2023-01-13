@@ -34,7 +34,9 @@ class MainRepository @Inject constructor(
      *
      * @return [LiveData] with [List] of [Run]
      */
-    fun getAllRunsSortedByDate(): LiveData<List<Run>> = runDao.getAllRunsSortedByDate()
+    fun getAllRunsSortedByDate(): LiveData<List<Run>> {
+        return runDao.getAllRunsSortedByDate()
+    }
 
     /**
      * Get all runs sorted by distance.
