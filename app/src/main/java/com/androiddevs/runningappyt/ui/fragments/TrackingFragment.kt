@@ -3,9 +3,7 @@
 package com.androiddevs.runningappyt.ui.fragments
 
 import android.Manifest
-import android.content.Context
 import android.content.Intent
-import android.location.LocationManager
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -42,9 +40,9 @@ import com.google.android.gms.maps.model.PolylineOptions
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
-import kotlin.math.round
-import javax.inject.Inject
 import java.util.Calendar
+import javax.inject.Inject
+import kotlin.math.round
 
 /**
  * [Fragment] to handle map related tasks used for tracking run.
@@ -185,9 +183,7 @@ class TrackingFragment : Fragment() {
     }
 
     private fun checkLocationEnabled() {
-        val locationManager =
-            requireContext().getSystemService(Context.LOCATION_SERVICE) as LocationManager
-        if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+        if (!TrackingUtility.locationOn(requireContext())) {
             MaterialAlertDialogBuilder(requireContext(), R.style.AlertDialogTheme)
                 .setMessage(getString(R.string.locServiceDialogText))
                 .setNegativeButton(getString(R.string.dialogCancel)) { _, _ -> }
