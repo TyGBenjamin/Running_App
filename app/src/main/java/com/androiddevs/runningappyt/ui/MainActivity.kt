@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentManager
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.androiddevs.runningappyt.R
@@ -21,11 +22,13 @@ import kotlinx.android.synthetic.main.activity_main.navHostFragment
 @Suppress("LateinitUsage")
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
+    val fragmentManager: FragmentManager by lazy { getSupportFragmentManager() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        fragmentManager.popBackStack()
         navigateToTrackingFragmentIfNeeded(intent)
 
         setSupportActionBar(binding.toolbar)
