@@ -9,7 +9,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:text="Welcome!\nPlease enter your name and weight."
+        android:text="@string/welcome_nplease_enter_your_name_and_weight"
         android:textAlignment="center"
         android:textSize="36sp"
         app:layout_constraintBottom_toTopOf="@+id/tilName"
@@ -33,7 +33,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
             android:ems="10"
-            android:hint="Your Name"
+            android:hint="@string/your_name"
             android:inputType="textPersonName" />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -50,7 +50,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
-            android:hint="Your Weight"
+            android:hint="@string/your_weight"
             android:ems="10"
             android:inputType="numberDecimal" />
 
@@ -60,7 +60,7 @@
         android:id="@+id/tvWeight"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="kg"
+        android:text="@string/kg"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="@+id/tilWeight"
         app:layout_constraintLeft_toRightOf="@id/tilWeight"
@@ -81,7 +81,7 @@
             android:id="@+id/tvContinue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Continue"
+            android:text="@string/continued"
             android:textColor="@color/colorAccent"
             android:textSize="24sp"
             app:layout_constraintBottom_toBottomOf="parent"
