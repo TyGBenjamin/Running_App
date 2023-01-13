@@ -34,6 +34,10 @@ android {
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_11.toString()
     }
+
+    buildFeatures{
+        viewBinding true
+    }
 }
 
 tasks.withType(Test) {
@@ -86,9 +90,6 @@ dependencies {
     implementation "com.google.dagger:hilt-android:$hilt_version"
     kapt "com.google.dagger:hilt-compiler:$hilt_version"
 
-    // Easy Permissions
-    implementation 'pub.devrel:easypermissions:3.0.0'
-
     // Timber
     implementation 'com.jakewharton.timber:timber:4.7.1'
 
@@ -96,4 +97,8 @@ dependencies {
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
 
     implementation 'android.arch.lifecycle:extensions:1.1.1'
+
+    //Permissions
+    implementation 'androidx.activity:activity-ktx:1.6.1'
+    implementation 'androidx.fragment:fragment-ktx:1.5.5'
 }

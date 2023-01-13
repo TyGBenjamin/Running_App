@@ -4,11 +4,13 @@ package com.androiddevs.runningappyt.other
 
 import android.Manifest
 import android.content.Context
+import android.content.pm.PackageManager
 import android.location.Location
+import android.location.LocationManager
 import android.os.Build
+import androidx.core.content.ContextCompat
 import com.androiddevs.runningappyt.services.Polyline
 import java.util.concurrent.TimeUnit
-import pub.devrel.easypermissions.EasyPermissions
 
 /**
  * Utility class to handle run tracking functions.
@@ -27,19 +29,48 @@ object TrackingUtility {
      */
     fun hasLocationPermissions(context: Context): Boolean =
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
-            EasyPermissions.hasPermissions(
+            checkPermissions(
                 context,
-                Manifest.permission.ACCESS_FINE_LOCATION,
-                Manifest.permission.ACCESS_COARSE_LOCATION
+                listOf(
+                    Manifest.permission.ACCESS_FINE_LOCATION
+                )
             )
         } else {
-            EasyPermissions.hasPermissions(
+            checkPermissions(
                 context,
-                Manifest.permission.ACCESS_FINE_LOCATION,
-                Manifest.permission.ACCESS_COARSE_LOCATION,
-                Manifest.permission.ACCESS_BACKGROUND_LOCATION
+                listOf(
+                    Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.ACCESS_BACKGROUND_LOCATION
+                )
             )
         }
+
+    /**
+     * Check given array of permissions.
+     *
+     * @param context
+     * @param permissions list of manifest permissions
+     * @return True if all permissions are granted. False if any are not granted.
+     */
+    fun checkPermissions(context: Context, permissions: List<String>): Boolean =
+        permissions.map { permission ->
+            ContextCompat.checkSelfPermission(
+                context,
+                permission
+            ) == PackageManager.PERMISSION_GRANTED
+        }.all { it }
+
+    /**
+     * Checks if location service is turned on.
+     *
+     * @param context
+     * @return true if location is on
+     */
+    fun locationOn(context: Context): Boolean {
+        val locationManager =
+            context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
+    }
 
     /**
      * Calculate length of polyline.

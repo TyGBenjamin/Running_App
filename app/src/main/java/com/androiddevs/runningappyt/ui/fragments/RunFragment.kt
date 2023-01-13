@@ -1,9 +1,9 @@
 package com.androiddevs.runningappyt.ui.fragments
 
-import android.Manifest
-import android.os.Build
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.AdapterView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -11,16 +11,10 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.androiddevs.runningappyt.R
 import com.androiddevs.runningappyt.adapters.RunAdapter
-import com.androiddevs.runningappyt.other.Constants.REQUEST_CODE_LOCATION_PERMISSION
+import com.androiddevs.runningappyt.databinding.FragmentRunBinding
 import com.androiddevs.runningappyt.other.SortType
-import com.androiddevs.runningappyt.other.TrackingUtility
 import com.androiddevs.runningappyt.ui.viewmodels.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.fragment_run.fab
-import kotlinx.android.synthetic.main.fragment_run.rvRuns
-import kotlinx.android.synthetic.main.fragment_run.spFilter
-import pub.devrel.easypermissions.AppSettingsDialog
-import pub.devrel.easypermissions.EasyPermissions
 
 /**
  * [Fragment] to view details of all finished runs.
@@ -28,15 +22,28 @@ import pub.devrel.easypermissions.EasyPermissions
  * @constructor Create instance of [RunFragment]
  */
 @AndroidEntryPoint
-class RunFragment : Fragment(R.layout.fragment_run), EasyPermissions.PermissionCallbacks {
+class RunFragment : Fragment() {
 
+    private var _binding: FragmentRunBinding? = null
+    val binding: FragmentRunBinding get() = _binding!!
     private val viewModel: MainViewModel by viewModels()
 
     private val runAdapter: RunAdapter by lazy { RunAdapter() }
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+    }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View =
+        FragmentRunBinding.inflate(inflater, container, false).also {
+            _binding = it
+        }.root
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) = with(binding) {
         super.onViewCreated(view, savedInstanceState)
-        requestPermissions()
         setupRecyclerView()
 
         when (viewModel.sortType) {
@@ -75,51 +82,10 @@ class RunFragment : Fragment(R.layout.fragment_run), EasyPermissions.PermissionC
         }
     }
 
-    private fun setupRecyclerView() = rvRuns.apply {
-        adapter = runAdapter
-        layoutManager = LinearLayoutManager(requireContext())
-    }
-
-    private fun requestPermissions() {
-        if (TrackingUtility.hasLocationPermissions(requireContext())) {
-            return
+    private fun setupRecyclerView() = with(binding) {
+        rvRuns.apply {
+            adapter = runAdapter
+            layoutManager = LinearLayoutManager(requireContext())
         }
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
-            EasyPermissions.requestPermissions(
-                this,
-                "You need to accept location permissions to use this app.",
-                REQUEST_CODE_LOCATION_PERMISSION,
-                Manifest.permission.ACCESS_COARSE_LOCATION,
-                Manifest.permission.ACCESS_FINE_LOCATION
-            )
-        } else {
-            EasyPermissions.requestPermissions(
-                this,
-                "You need to accept location permissions to use this app.",
-                REQUEST_CODE_LOCATION_PERMISSION,
-                Manifest.permission.ACCESS_COARSE_LOCATION,
-                Manifest.permission.ACCESS_FINE_LOCATION,
-                Manifest.permission.ACCESS_BACKGROUND_LOCATION
-            )
-        }
-    }
-
-    override fun onPermissionsDenied(requestCode: Int, perms: MutableList<String>) {
-        if (EasyPermissions.somePermissionPermanentlyDenied(this, perms)) {
-            AppSettingsDialog.Builder(this).build().show()
-        } else {
-            requestPermissions()
-        }
-    }
-
-    override fun onPermissionsGranted(requestCode: Int, perms: MutableList<String>) {}
-
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this)
     }
 }
