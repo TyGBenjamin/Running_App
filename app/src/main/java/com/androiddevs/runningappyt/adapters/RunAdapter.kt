@@ -3,12 +3,10 @@
 package com.androiddevs.runningappyt.adapters
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.androiddevs.runningappyt.R
 import com.androiddevs.runningappyt.databinding.ItemRunBinding
 import com.androiddevs.runningappyt.db.Run
 import com.androiddevs.runningappyt.other.Constants
@@ -17,6 +15,12 @@ import com.bumptech.glide.Glide
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
+import kotlinx.android.synthetic.main.item_run.view.ivRunImage
+import kotlinx.android.synthetic.main.item_run.view.tvAvgSpeed
+import kotlinx.android.synthetic.main.item_run.view.tvCalories
+import kotlinx.android.synthetic.main.item_run.view.tvDate
+import kotlinx.android.synthetic.main.item_run.view.tvDistance
+import kotlinx.android.synthetic.main.item_run.view.tvTime
 
 /**
  * [RecyclerView.Adapter] to display [List] of [Run].
@@ -25,24 +29,13 @@ import java.util.Locale
  */
 class RunAdapter : RecyclerView.Adapter<RunAdapter.RunViewHolder>() {
 
-    private var _binding: ItemRunBinding? = null
-    private val binding: ItemRunBinding get() = _binding!!
-
-    private val tvAvgSpeed by lazy { binding.tvAvgSpeed }
-    private val tvDate by lazy { binding.tvDate }
-    private val tvTime by lazy { binding.tvTime }
-    private val tvCalories by lazy { binding.tvCalories }
-    private val tvDistance by lazy { binding.tvDistance }
-    private val ivRunImage by lazy { binding.ivRunImage }
-
     /**
      * Run view holder.
      *
-     * @constructor Create instance of [RunViewHolder]
-     *
-     * @param itemView
+     * @property binding
+     * @constructor Create empty Run view holder
      */
-    class RunViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
+    class RunViewHolder(val binding: ItemRunBinding) : RecyclerView.ViewHolder(binding.root)
 
     private val diffCallback = object : DiffUtil.ItemCallback<Run>() {
         override fun areItemsTheSame(oldItem: Run, newItem: Run): Boolean {
@@ -64,13 +57,8 @@ class RunAdapter : RecyclerView.Adapter<RunAdapter.RunViewHolder>() {
     fun submitList(list: List<Run>) = differ.submitList(list)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RunViewHolder {
-        return RunViewHolder(
-            LayoutInflater.from(parent.context).inflate(
-                R.layout.item_run,
-                parent,
-                false
-            )
-        )
+        val itemBinding = ItemRunBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return RunViewHolder(itemBinding)
     }
 
     override fun getItemCount(): Int {
