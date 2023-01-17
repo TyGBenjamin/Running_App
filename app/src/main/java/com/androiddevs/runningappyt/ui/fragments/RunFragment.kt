@@ -9,9 +9,12 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.androiddevs.runningappyt.R
 import com.androiddevs.runningappyt.adapters.RunAdapter
 import com.androiddevs.runningappyt.databinding.FragmentRunBinding
+import com.androiddevs.runningappyt.other.Constants.DYNEG
+import com.androiddevs.runningappyt.other.Constants.DYPOS
 import com.androiddevs.runningappyt.other.SortType
 import com.androiddevs.runningappyt.ui.viewmodels.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -80,6 +83,29 @@ class RunFragment : Fragment() {
         fab.setOnClickListener {
             findNavController().navigate(R.id.action_runFragment_to_trackingFragment)
         }
+
+        rvRuns.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                // if the recycler view is scrolled
+                // above hide the FAB
+                if (dy > DYPOS && fab.isShown) {
+                    fab.hide()
+                }
+
+                // if the recycler view is
+                // scrolled above show the FAB
+                if (dy < DYNEG && !fab.isShown) {
+                    fab.show()
+                }
+
+                // of the recycler view is at the first
+                // item always show the FAB
+                if (!recyclerView.canScrollVertically(-1)) {
+                    fab.show()
+                }
+            }
+        })
     }
 
     private fun setupRecyclerView() = with(binding) {
