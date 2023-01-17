@@ -14,7 +14,7 @@
     <string name="apply_changes">Apply Changes</string>
     <string name="your_weight">Your Weight</string>
     <string name="your_name">Your Name</string>
-    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">APIKEY HERE</string>
+    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyBsslWvaDLoezersODPq5OTWJx7kJQlnPg</string>
     <string name="fineLocDialogTest">This app requires access to PRECISE location in order to work.
         \nPress \'Allow\' to give access.</string>
     <string name="bgLocDialogText">This app also requires location access at all times in order to track your run.
@@ -54,4 +54,5 @@
     <string name="statistics">Statistics</string>
     <string name="your_runs">Your Runs</string>
     <string name="cancel_run">Cancel Run</string>
+    <string name="hi">hi</string>
 </resources>

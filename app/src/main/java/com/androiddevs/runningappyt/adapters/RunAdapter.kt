@@ -35,7 +35,13 @@ class RunAdapter : RecyclerView.Adapter<RunAdapter.RunViewHolder>() {
      * @property binding
      * @constructor Create empty Run view holder
      */
-    class RunViewHolder(val binding: ItemRunBinding) : RecyclerView.ViewHolder(binding.root)
+    class RunViewHolder(val binding: ItemRunBinding) : RecyclerView.ViewHolder(binding.root){
+        fun setClickListener(){
+            binding.root.setOnClickListener(){
+                println("This runner has been clicked for detials Fragment")
+            }
+        }
+    }
 
     private val diffCallback = object : DiffUtil.ItemCallback<Run>() {
         override fun areItemsTheSame(oldItem: Run, newItem: Run): Boolean {
@@ -68,6 +74,9 @@ class RunAdapter : RecyclerView.Adapter<RunAdapter.RunViewHolder>() {
     override fun onBindViewHolder(holder: RunViewHolder, position: Int) {
         val run = differ.currentList[position]
         holder.itemView.apply {
+            setOnClickListener {
+                it.setOnClickListener { println("I have been clicked") }
+            }
             Glide.with(this).load(run.img).into(ivRunImage)
 
             val calendar = Calendar.getInstance().apply {
