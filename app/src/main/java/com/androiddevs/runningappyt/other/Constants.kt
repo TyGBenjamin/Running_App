@@ -43,6 +43,9 @@ object Constants {
     const val NOTIFICATION_CHANNEL_NAME = "Tracking"
     const val NOTIFICATION_ID = 1
 
+    const val DYPOS = 10
+    val DYNEG = -10
+
     /**
      * Time related constants.
      *
