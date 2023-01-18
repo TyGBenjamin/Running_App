@@ -78,18 +78,6 @@ class SettingsFragment : Fragment() {
         colorChart.setOnClickListener { loadColorPicker() }
     }
 
-    private class CustomFlag(context: Context, layout: Int) : FlagView(context, layout) {
-        private val textView: TextView = findViewById(R.id.flag_color_id)
-        private val view: View = findViewById(R.id.flag_color_box)
-        private val hex = 6
-
-        override fun onRefresh(colorEnvelope: ColorEnvelope) {
-            textView.text = "#${colorEnvelope.hexCode.takeLast(hex)}"
-            view.setBackgroundColor(colorEnvelope.color)
-            this.rotation = 0F
-        }
-    }
-
     private fun loadFieldsFromSharedPref() = with(binding) {
         val name = sharedPreferences.getString(KEY_NAME, "")
         val weight =
@@ -178,6 +166,18 @@ class SettingsFragment : Fragment() {
         val view1 = builder.colorPickerView
         view1.flagView = CustomFlag(requireContext(), R.layout.layout_color_flag)
         builder.show()
+    }
+
+    private class CustomFlag(context: Context, layout: Int) : FlagView(context, layout) {
+        private val textView: TextView = findViewById(R.id.flag_color_id)
+        private val view: View = findViewById(R.id.flag_color_box)
+        private val hex = 6
+
+        override fun onRefresh(colorEnvelope: ColorEnvelope) {
+            textView.text = "#${colorEnvelope.hexCode.takeLast(hex)}"
+            view.setBackgroundColor(colorEnvelope.color)
+            this.rotation = 0F
+        }
     }
 
     private fun getComplementaryColor(rgb: List<Int>): Int {
