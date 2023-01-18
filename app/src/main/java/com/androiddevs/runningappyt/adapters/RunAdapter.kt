@@ -4,6 +4,7 @@ package com.androiddevs.runningappyt.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -11,6 +12,7 @@ import com.androiddevs.runningappyt.databinding.ItemRunBinding
 import com.androiddevs.runningappyt.db.Run
 import com.androiddevs.runningappyt.other.Constants
 import com.androiddevs.runningappyt.other.TrackingUtility
+import com.androiddevs.runningappyt.ui.fragments.RunFragmentDirections
 import com.bumptech.glide.Glide
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -35,13 +37,7 @@ class RunAdapter : RecyclerView.Adapter<RunAdapter.RunViewHolder>() {
      * @property binding
      * @constructor Create empty Run view holder
      */
-    class RunViewHolder(val binding: ItemRunBinding) : RecyclerView.ViewHolder(binding.root){
-        fun setClickListener(){
-            binding.root.setOnClickListener(){
-                println("This runner has been clicked for detials Fragment")
-            }
-        }
-    }
+    class RunViewHolder(val binding: ItemRunBinding) : RecyclerView.ViewHolder(binding.root)
 
     private val diffCallback = object : DiffUtil.ItemCallback<Run>() {
         override fun areItemsTheSame(oldItem: Run, newItem: Run): Boolean {
@@ -75,7 +71,9 @@ class RunAdapter : RecyclerView.Adapter<RunAdapter.RunViewHolder>() {
         val run = differ.currentList[position]
         holder.itemView.apply {
             setOnClickListener {
-                it.setOnClickListener { println("I have been clicked") }
+                it.setOnClickListener { println("I have been clicked with ${run.id}")
+                    val action = RunFragmentDirections.actionRunFragmentToRunDetailsFragment(run.id)
+                findNavController().navigate(action)}
             }
             Glide.with(this).load(run.img).into(ivRunImage)
 

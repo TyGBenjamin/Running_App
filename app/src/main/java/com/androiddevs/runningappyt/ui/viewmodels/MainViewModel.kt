@@ -7,8 +7,8 @@ import com.androiddevs.runningappyt.db.Run
 import com.androiddevs.runningappyt.other.SortType
 import com.androiddevs.runningappyt.repositories.MainRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlinx.coroutines.launch
 
 /**
  * [ViewModel] to manage all run related tasks.
@@ -26,6 +26,7 @@ class MainViewModel @Inject constructor(private val mainRepository: MainReposito
     private val runsSortedByAvgSpeed = mainRepository.getAllRunsSortedByAvgSpeed()
 
     val runs = MediatorLiveData<List<Run>>()
+
 
     var sortType = SortType.DATE
 
