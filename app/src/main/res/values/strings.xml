@@ -7,6 +7,9 @@
         <item>Average Speed</item>
         <item>Calories Burned</item>
     </string-array>
+    <string name="Language">Language</string>
+    <string name="English">English</string>
+    <string name="Spanish">Spanish</string>
     <string name="Mode">Mode</string>
     <string name="light_mode">Light Mode</string>
     <string name="dark_mode">Dark Mode</string>
@@ -14,7 +17,7 @@
     <string name="apply_changes">Apply Changes</string>
     <string name="your_weight">Your Weight</string>
     <string name="your_name">Your Name</string>
-    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">KEy</string>
+    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">API KEY HERE</string>
     <string name="fineLocDialogTest">This app requires access to PRECISE location in order to work.
         \nPress \'Allow\' to give access.</string>
     <string name="bgLocDialogText">This app also requires location access at all times in order to track your run.

@@ -87,6 +87,48 @@
             />
     </RadioGroup>
 
+
+
+    <TextView
+        android:id="@+id/language"
+        android:text="@string/Language"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnMode"/>
+    
+    <RadioGroup
+        android:id="@+id/languageChoice"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/language"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:textAlignment="center">
+
+        <RadioButton android:id="@+id/languageEnglish"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="@string/English"
+            />
+        <RadioButton android:id="@+id/languageSpanish"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="@string/Spanish"
+            />
+
+    </RadioGroup>
+
+
+
     <Button
         android:id="@+id/btnApplyChanges"
         android:layout_width="wrap_content"
@@ -95,7 +137,7 @@
         android:text="@string/apply_changes"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnMode" />
+        app:layout_constraintTop_toBottomOf="@+id/languageChoice" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline3"
