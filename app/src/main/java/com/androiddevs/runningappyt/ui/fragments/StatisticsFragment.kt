@@ -92,21 +92,29 @@ class StatisticsFragment : Fragment() {
     }
 
     private fun subscribeToObservers() = with(binding) {
-        viewModel.totalTimeRun.observe(viewLifecycleOwner) { totalTimeRun: Long ->
-            tvTotalTime.text = TrackingUtility.getFormattedStopWatchTime(totalTimeRun)
+        viewModel.totalTimeRun.observe(viewLifecycleOwner) { totalTimeRun: Long? ->
+            totalTimeRun?.let {
+                tvTotalTime.text = TrackingUtility.getFormattedStopWatchTime(totalTimeRun)
+            }
         }
-        viewModel.totalDistance.observe(viewLifecycleOwner) { totalDistance: Int ->
-            val km = totalDistance / THOUSAND
-            val distance: Float = round(km * TEN) / TEN
-            tvTotalDistance.text = String.format(Locale.getDefault(), "%,.1f km", distance)
+        viewModel.totalDistance.observe(viewLifecycleOwner) { totalDistance: Int? ->
+            totalDistance?.let {
+                val km = totalDistance / THOUSAND
+                val distance: Float = round(km * TEN) / TEN
+                tvTotalDistance.text = String.format(Locale.getDefault(), "%,.1f km", distance)
+            }
         }
-        viewModel.totalAvgSpeed.observe(viewLifecycleOwner) { totalAvgSpeed: Float ->
-            val avgSpeed: Float = round(totalAvgSpeed * TEN) / TEN
-            tvAverageSpeed.text = String.format(Locale.getDefault(), "%,.1f km/h", avgSpeed)
+        viewModel.totalAvgSpeed.observe(viewLifecycleOwner) { totalAvgSpeed: Float? ->
+            totalAvgSpeed?.let {
+                val avgSpeed: Float = round(totalAvgSpeed * TEN) / TEN
+                tvAverageSpeed.text = String.format(Locale.getDefault(), "%,.1f km/h", avgSpeed)
+            }
         }
-        viewModel.totalCaloriesBurned.observe(viewLifecycleOwner) { totalCaloriesBurned: Int ->
-            tvTotalCalories.text =
-                String.format(Locale.getDefault(), "%d kcal", totalCaloriesBurned)
+        viewModel.totalCaloriesBurned.observe(viewLifecycleOwner) { totalCaloriesBurned: Int? ->
+            totalCaloriesBurned?.let {
+                tvTotalCalories.text =
+                    String.format(Locale.getDefault(), "%d kcal", totalCaloriesBurned)
+            }
         }
         viewModel.runsSortedByDate.observe(viewLifecycleOwner) { sortedRunList ->
             val allAvgSpeeds = sortedRunList.indices
