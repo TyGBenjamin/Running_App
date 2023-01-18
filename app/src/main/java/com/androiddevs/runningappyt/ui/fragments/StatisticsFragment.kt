@@ -2,6 +2,7 @@
 
 package com.androiddevs.runningappyt.ui.fragments
 
+import android.content.SharedPreferences
 import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,8 +13,12 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.androiddevs.runningappyt.R
 import com.androiddevs.runningappyt.databinding.FragmentStatisticsBinding
+import com.androiddevs.runningappyt.other.Constants.BAR_COLOR
+import com.androiddevs.runningappyt.other.Constants.CHART_COLOR
+import com.androiddevs.runningappyt.other.Constants.CHART_LINE_COLOR
 import com.androiddevs.runningappyt.other.Constants.Float.TEN
 import com.androiddevs.runningappyt.other.Constants.Float.THOUSAND
+import com.androiddevs.runningappyt.other.Constants.USE_CHART_CUSTOM_COLOR
 import com.androiddevs.runningappyt.other.CustomMarkerView
 import com.androiddevs.runningappyt.other.TrackingUtility
 import com.androiddevs.runningappyt.ui.viewmodels.StatisticsViewModel
@@ -24,6 +29,7 @@ import com.github.mikephil.charting.data.BarEntry
 import dagger.hilt.android.AndroidEntryPoint
 import kotlin.math.round
 import java.util.Locale
+import javax.inject.Inject
 
 /**
  * [Fragment] to manage all run statistics.
@@ -35,6 +41,9 @@ class StatisticsFragment : Fragment() {
     private var _binding: FragmentStatisticsBinding? = null
     val binding: FragmentStatisticsBinding get() = _binding!!
     private val viewModel: StatisticsViewModel by viewModels()
+
+    @Inject
+    lateinit var sharedPreferences: SharedPreferences
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -52,25 +61,32 @@ class StatisticsFragment : Fragment() {
     }
 
     private fun setupBarChart() = with(binding) {
+        var lineColor = Color.WHITE
+        if (sharedPreferences.getBoolean(USE_CHART_CUSTOM_COLOR, false)) {
+            val chartColor = sharedPreferences.getInt(CHART_COLOR, Color.BLACK)
+            barChart.setBackgroundColor(chartColor)
+            lineColor = sharedPreferences.getInt(CHART_LINE_COLOR, Color.WHITE)
+        }
         barChart.xAxis.apply {
             position = XAxis.XAxisPosition.BOTTOM
             setDrawLabels(false)
-            axisLineColor = Color.WHITE
-            textColor = Color.WHITE
+            axisLineColor = lineColor
+            textColor = lineColor
             setDrawGridLines(false)
         }
         barChart.axisLeft.apply {
-            axisLineColor = Color.WHITE
-            textColor = Color.WHITE
+            axisLineColor = lineColor
+            textColor = lineColor
             setDrawGridLines(false)
         }
         barChart.axisRight.apply {
-            axisLineColor = Color.WHITE
-            textColor = Color.WHITE
+            axisLineColor = lineColor
+            textColor = lineColor
             setDrawGridLines(false)
         }
         barChart.apply {
             description.text = "Avg Speed Over Time"
+            description.textColor = if (lineColor == Color.BLACK) Color.WHITE else Color.BLACK
             legend.isEnabled = false
         }
     }
@@ -96,8 +112,13 @@ class StatisticsFragment : Fragment() {
             val allAvgSpeeds = sortedRunList.indices
                 .map { i -> BarEntry(i.toFloat(), sortedRunList[i].avgSpeedInKMH) }
             val barDataSet = BarDataSet(allAvgSpeeds, "Avg Speed Over Time").apply {
-                valueTextColor = Color.WHITE
-                color = ContextCompat.getColor(requireContext(), R.color.colorAccent)
+                if (sharedPreferences.getBoolean(USE_CHART_CUSTOM_COLOR, false)) {
+                    valueTextColor = sharedPreferences.getInt(CHART_LINE_COLOR, Color.WHITE)
+                    color = sharedPreferences.getInt(BAR_COLOR, Color.WHITE)
+                } else {
+                    valueTextColor = Color.WHITE
+                    color = ContextCompat.getColor(requireContext(), R.color.colorAccent)
+                }
             }
             barChart.data = BarData(barDataSet)
             barChart.marker = CustomMarkerView(
