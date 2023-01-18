@@ -7,6 +7,7 @@ import android.content.SharedPreferences
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -82,9 +83,10 @@ class SettingsFragment : Fragment() {
         val name = sharedPreferences.getString(KEY_NAME, "")
         val weight =
             sharedPreferences.getFloat(KEY_WEIGHT, Constants.Default.WEIGHT)
-        val defaultMode = sharedPreferences.getBoolean(RADIO_DEFAULT_MODE, false)
+        val defaultMode = sharedPreferences.getBoolean(RADIO_DEFAULT_MODE, true)
         val lightMode = sharedPreferences.getBoolean(RADIO_LIGHT_MODE, false)
         val darkMode = sharedPreferences.getBoolean(RADIO_DARK_MODE, false)
+
         radioDefaultMode.isChecked = defaultMode
         radioLightMode.isChecked = lightMode
         radioDarkMode.isChecked = darkMode
