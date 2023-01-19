@@ -22,7 +22,9 @@ import com.androiddevs.runningappyt.other.Constants.KEY_NAME
 import com.androiddevs.runningappyt.other.Constants.KEY_WEIGHT
 import com.androiddevs.runningappyt.other.Constants.RADIO_DARK_MODE
 import com.androiddevs.runningappyt.other.Constants.RADIO_DEFAULT_MODE
+import com.androiddevs.runningappyt.other.Constants.RADIO_ENGLISH
 import com.androiddevs.runningappyt.other.Constants.RADIO_LIGHT_MODE
+import com.androiddevs.runningappyt.other.Constants.RADIO_SPANISH
 import com.androiddevs.runningappyt.other.Constants.USE_CHART_CUSTOM_COLOR
 import com.google.android.material.snackbar.Snackbar
 import com.skydoves.colorpickerview.ColorEnvelope
@@ -102,6 +104,10 @@ class SettingsFragment : Fragment() {
 
         etName.setText(name)
         etWeight.setText(weight.toString())
+        val english = sharedPreferences.getBoolean(RADIO_ENGLISH, false)
+        val spanish = sharedPreferences.getBoolean(RADIO_SPANISH, false)
+        languageEnglish.isChecked = english
+        languageSpanish.isChecked = spanish
     }
 
     private fun applyChangesToSharedPref(): Boolean = with(binding) {
@@ -110,6 +116,8 @@ class SettingsFragment : Fragment() {
         val radioDefaultMode = radioDefaultMode.isChecked
         val radioLightMode = radioLightMode.isChecked
         val radioDarkMode = radioDarkMode.isChecked
+        val english = languageEnglish.isChecked
+        val spanish = languageSpanish.isChecked
         val useCustomChartColor = radioChartCustom.isChecked
 
         if (nameText.isEmpty() || weightText.isEmpty()) {
@@ -122,6 +130,8 @@ class SettingsFragment : Fragment() {
             .putBoolean(RADIO_DEFAULT_MODE, radioDefaultMode)
             .putBoolean(RADIO_LIGHT_MODE, radioLightMode)
             .putBoolean(RADIO_DARK_MODE, radioDarkMode)
+            .putBoolean(RADIO_ENGLISH, english)
+            .putBoolean(RADIO_SPANISH, spanish)
             .putBoolean(USE_CHART_CUSTOM_COLOR, useCustomChartColor)
             .apply()
 

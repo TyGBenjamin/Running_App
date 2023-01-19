@@ -44,7 +44,10 @@ object Constants {
     const val NOTIFICATION_ID = 1
 
     const val DYPOS = 10
-    val DYNEG = -10
+    const val DYNEG = -10
+
+    const val RADIO_ENGLISH = "RADIO_ENGLISH"
+    const val RADIO_SPANISH = "RADIO_SPANISH"
 
     /**
      * Time related constants.

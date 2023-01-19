@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">RunningApp</string>
+    <string-array name="filter_options">
+        <item>Fecha</item>
+        <item>Tiempo de corriendo</item>
+        <item>Distancia</item>
+        <item>Velocidad media</item>
+        <item>Calorías quemadas</item>
+    </string-array>
+    <string name="Language">Idioma</string>
+    <string name="English">Inglés</string>
+    <string name="Spanish">Español</string>
+    <string name="Mode">Modo</string>
+    <string name="light_mode">Modo de luz</string>
+    <string name="dark_mode">Modo oscuro</string>
+    <string name="default_mode">Defecto</string>
+    <string name="apply_changes">Aplicar cambios</string>
+    <string name="your_weight">Tu peso</string>
+    <string name="your_name">Tu Nombre</string>
+    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">API KEY HERE</string>
+    <string name="fineLocDialogTest">Esta aplicación requiere acceso a la ubicación PRECISA para poder funcionar.
+        \nPresionar \'Permitir\' para dar acceso.</string>
+    <string name="bgLocDialogText">Esta aplicación también requiere acceso a la ubicación en todo momento para realizar un seguimiento de su carrera.
+        \nPara dar acceso, presione \'Permitir\' y en la siguiente pantalla, elija \'Permitir todo el tiempo.\'</string>
+    <string name="permissionDialogPos">Permitir</string>
+    <string name="dialogCancel">Cancelar</string>
+    <string name="permissionDialogDeniedText">No se otorgaron los permisos de ubicación requeridos. La ubicación de ejecución no será rastreada</string>
+    <string name="permissionDialogDeniedNeg">Ok</string>
+    <string name="locServiceDialogText">La ubicación está actualmente desactivada. Activa los servicios de ubicación para realizar un seguimiento de tu carrera.</string>
+    <string name="startRun">Empieza a correr</string>
+    <string name="finish_run">Terminar carrera</string>
+    <string name="start">Comienzo</string>
+    <string name="zero_time_short">00:00:00</string>
+    <string name="total_distance">Distancia total</string>
+    <string name="running_app">Aplicación en corriendo</string>
+    <string name="sort_by">Ordenar por</string>
+    <string name="continued">Continuar</string>
+    <string name="kg">kg</string>
+    <string name="welcome_nplease_enter_your_name_and_weight">¡Bienvenido!\nPor favor ingrese su nombre y peso.</string>
+    <string name="_0km">0km</string>
+    <string name="total_time">Tiempo Total</string>
+    <string name="total_calories_burned">Calorías totales quemadas</string>
+    <string name="_0kcal">0kcal</string>
+    <string name="average_speed">Velocidad media</string>
+    <string name="_0km_h">0km/h</string>
+    <string name="zero_time_long">00:00:00:00</string>
+    <string name="let_s_go_username">Let\'s go, USERNAME!</string>
+    <string name="calories">CALORÍAS</string>
+    <string name="avgspeed">LAVELOCIDADPROMEDIO</string>
+    <string name="distance">DISTANCIA</string>
+    <string name="time">HORA</string>
+    <string name="date">FECHA</string>
+    <string name="calories_burned">CALORÍAS QUEMADAS</string>
+    <string name="avg_speed">LA VELOCIDAD PROMEDIO</string>
+    <string name="duration">DURACIÓN</string>
+    <string name="settings">Ajustes</string>
+    <string name="statistics">Estadísticas</string>
+    <string name="your_runs">Tus carreras</string>
+    <string name="cancel_run">Deja de correr</string>
+</resources>
