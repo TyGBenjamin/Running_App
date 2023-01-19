@@ -29,11 +29,12 @@
         android:id="@+id/tilWeight"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/guideline3"
+        app:layout_constraintBottom_toTopOf="@+id/tvMode"
+        android:layout_marginBottom="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline3">
+        >
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etWeight"
@@ -47,45 +48,168 @@
 
     <TextView
         android:id="@+id/tvMode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="@string/Mode"
         android:textSize="20sp"
         android:textStyle="bold"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tilWeight"/>
+        app:layout_constraintBottom_toTopOf="@+id/guideline3"
+        app:layout_constraintTop_toTopOf="@+id/guideline3" />
 
     <RadioGroup
         android:id="@+id/btnMode"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvMode"
-        android:orientation="horizontal"
-        android:gravity="center"
-        android:textAlignment="center">
-        <RadioButton android:id="@+id/radioDefaultMode"
+        app:layout_constraintTop_toBottomOf="@id/tvMode">
+
+        <RadioButton
+            android:id="@+id/radioDefaultMode"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:checked="true"
-            android:text="@string/default_mode"
-            />
-        <RadioButton android:id="@+id/radioLightMode"
+            android:text="@string/default_mode" />
+
+        <RadioButton
+            android:id="@+id/radioLightMode"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:text="@string/light_mode"
-            />
-        <RadioButton android:id="@+id/radioDarkMode"
+            android:text="@string/light_mode" />
+
+        <RadioButton
+            android:id="@+id/radioDarkMode"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:text="@string/dark_mode"
-            />
+            android:text="@string/dark_mode" />
     </RadioGroup>
+
+    <TextView
+        android:id="@+id/textChartTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/chartSettingTitle"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnMode" />
+
+    <RadioGroup
+        android:id="@+id/radioGroupChart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textChartTitle">
+
+        <RadioButton
+            android:id="@+id/radioChartDefault"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/default_mode" />
+
+        <RadioButton
+            android:id="@+id/radioChartCustom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="@string/custom_color_mode" />
+    </RadioGroup>
+
+    <LinearLayout
+        android:id="@+id/layoutChartColors"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@+id/radioGroupChart"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:gravity="center">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_marginEnd="16dp">
+
+            <TextView
+                android:id="@+id/textCustomColor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textSize="16dp"
+                android:textStyle="bold"
+                android:text="@string/customColorLabel"/>
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/drawable_background"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/colorChart"
+                    android:layout_width="wrap_content"
+                    android:layout_margin="1dp"
+                    android:textSize="16dp"
+                    android:textStyle="bold"
+                    android:padding="5dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/colorChange"
+                    android:background="@color/colorAccent"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/textBarColor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textSize="16dp"
+                android:textStyle="bold"
+                android:text="@string/bar_color_label"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+            <LinearLayout
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/drawable_background"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/colorBar"
+                    android:layout_width="wrap_content"
+                    android:layout_margin="1dp"
+                    android:layout_height="wrap_content"
+                    android:textSize="16dp"
+                    android:textStyle="bold"
+                    android:padding="5dp"
+                    android:text="@string/colorChange"
+                    android:background="@color/colorAccent"/>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
 
 
 
@@ -99,8 +223,8 @@
         android:layout_marginTop="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnMode"/>
-    
+        app:layout_constraintTop_toBottomOf="@+id/layoutChartColors"/>
+
     <RadioGroup
         android:id="@+id/languageChoice"
         android:layout_width="match_parent"
@@ -144,6 +268,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.5" />
+        app:layout_constraintGuide_percent="0.44" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

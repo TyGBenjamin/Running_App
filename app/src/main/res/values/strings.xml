@@ -57,4 +57,12 @@
     <string name="statistics">Statistics</string>
     <string name="your_runs">Your Runs</string>
     <string name="cancel_run">Cancel Run</string>
+    <string name="colorPickerTitle">Custom Chart Color</string>
+    <string name="colorPickerName">ChartColor</string>
+    <string name="colorPickerPos">Select</string>
+    <string name="colorChange">Change</string>
+    <string name="chartSettingTitle">Chart Color</string>
+    <string name="custom_color_mode">Custom Color</string>
+    <string name="customColorLabel">Custom\nChart Color</string>
+    <string name="bar_color_label">Bar Color\n(Auto-Generated)</string>
 </resources>
