@@ -71,9 +71,10 @@ class RunAdapter : RecyclerView.Adapter<RunAdapter.RunViewHolder>() {
         val run = differ.currentList[position]
         holder.itemView.apply {
             setOnClickListener {
-                it.setOnClickListener { println("I have been clicked with ${run.id}")
+                it.setOnClickListener {
                     val action = RunFragmentDirections.actionRunFragmentToRunDetailsFragment(run.id)
-                findNavController().navigate(action)}
+                    findNavController().navigate(action)
+                }
             }
             Glide.with(this).load(run.img).into(ivRunImage)
 

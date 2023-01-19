@@ -34,9 +34,7 @@ class MainRepository @Inject constructor(
      *
      * @param id
      */
-    suspend fun getRunById(id:Int) = runDao.getRunById(id)
-
-
+    suspend fun getRunById(id: Int) = runDao.getRunById(id)
 
     /**
      * Get all runs sorted by date.

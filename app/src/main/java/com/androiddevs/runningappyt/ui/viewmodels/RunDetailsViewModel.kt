@@ -22,13 +22,26 @@ class RunDetailsViewModel @Inject constructor(private val mainRepository: MainRe
     private val _run = MutableStateFlow<Run?>(null)
     val run get() = _run.asStateFlow()
 
+    /**
+     * Get run by id from database.
+     *
+     * @param id
+     */
     fun getRunById(id: Int) {
         viewModelScope.launch {
             _run.value = mainRepository.getRunById(id)
         }
     }
 
+    /**
+     * Delete run from database.
+     *
+     * @param run
+     */
     fun deleteRun(run: Run) = viewModelScope.launch {
         mainRepository.deleteRun(run)
+    }
+    companion object {
+        const val div = 1000
     }
 }

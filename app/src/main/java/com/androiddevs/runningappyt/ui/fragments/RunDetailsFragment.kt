@@ -29,14 +29,17 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.androiddevs.runningappyt.R
 import com.androiddevs.runningappyt.db.Run
 import com.androiddevs.runningappyt.ui.viewmodels.RunDetailsViewModel
+import com.androiddevs.runningappyt.ui.viewmodels.RunDetailsViewModel.Companion.div
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
@@ -51,7 +54,7 @@ class RunDetailsFragment : Fragment() {
     private val args: RunDetailsFragmentArgs by navArgs()
     val runViewModel by activityViewModels<RunDetailsViewModel>()
     override fun onCreate(savedInstanceState: Bundle?) {
-  lifecycleScope.launch { runViewModel.getRunById(args.runnerID) }
+        lifecycleScope.launch { runViewModel.getRunById(args.runnerID) }
         super.onCreate(savedInstanceState)
     }
 
@@ -67,7 +70,7 @@ class RunDetailsFragment : Fragment() {
                     modifier = Modifier
                         .fillMaxSize()
                         .background(Color.White)
-                ){
+                ) {
                     ShowRunDetailsVM(args.runnerID)
 //                    mainViewModel.runs.value?.let { ShowRunDetails(run = it.get(args.runnerID)) }
                 }
@@ -76,58 +79,51 @@ class RunDetailsFragment : Fragment() {
     }
 
     @SuppressLint("SimpleDateFormat")
+    @Suppress("LongMethod")
     @Composable
     fun ShowRunDetailsVM(runnerID: Int) {
         var (snackbarVisibleState, setSnackBarState) = remember { mutableStateOf(false) }
         runViewModel.getRunById(runnerID)
         val run by runViewModel.run.collectAsState()
-        Box(modifier = Modifier.padding(4.dp),
-            contentAlignment = Alignment.Center) {
-            Column (horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center) {
-                Row(modifier = Modifier.padding(4.dp),
-                horizontalArrangement = Arrangement.Center,
-                verticalAlignment = Alignment.CenterVertically){
+        Box(
+            modifier = Modifier.padding(4.dp),
+            contentAlignment = Alignment.Center
+        ) {
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
+            ) {
+                Row(
+                    modifier = Modifier.padding(4.dp),
+                    horizontalArrangement = Arrangement.Center,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
                     if (run != null) {
                         val simpleDateFormat = SimpleDateFormat("MM/dd/yyyy")
                         val dateString = simpleDateFormat.format(run!!.timestamp)
                         Text(text = "Time Stamp: $dateString ")
                     }
                     if (run != null) {
-                        val timeRan = run?.timeInMillis?.div(1000)
+                        val timeRan = run?.timeInMillis?.div(div)
                         Text(text = " Time Ran: $timeRan(s)")
                     }
                 }
-                DividerOne()
-                Text(text = "Distance (m): ${run?.distanceInMeters}")
-                Text(text = "Calories burned: ${run?.caloriesBurned}")
-                Text(text = "Avg Speed(km/h): ${run?.avgSpeedInKMH}")
-                DividerOne()
-                run?.img?.let { Image(bitmap = it.asImageBitmap(), contentDescription = "Runner Detailed Image" ) }
-                Row() {
-                    var (hiddenVisibleState, setHiddenState) =  remember {
+                DisplayText(run = run)
+                run?.img?.let {
+                    Image(
+                        bitmap = it.asImageBitmap(),
+                        contentDescription = stringResource(R.string.contentDes)
+                    )
+                }
+                Row {
+                    var (hiddenVisibleState, setHiddenState) = remember {
                         mutableStateOf(false)
                     }
-
-                    Button(
-                        modifier = Modifier.padding(vertical = 10.dp),
-                        colors = ButtonDefaults.buttonColors(containerColor = Color.Black,
-                            disabledContainerColor = Color.Gray),
-                        onClick = { findNavController().navigateUp() }) {
-                        Text(text = "Back", color = Color.White)
-                    }
-                    if(!hiddenVisibleState) {
-                        Button(
-                            modifier = Modifier.padding(vertical = 10.dp),
-                            colors = ButtonDefaults.buttonColors(
-                                containerColor = Color.Black,
-                                disabledContainerColor = Color.Gray
-                            ),
-                            onClick = {
-                                setSnackBarState(!snackbarVisibleState)
-                                setHiddenState(!hiddenVisibleState)
-                            }) {
-                            Text(text = "Delete Run", color = Color.White)
+                    ButtonOne()
+                    if (!hiddenVisibleState) {
+                        ButtonDelete {
+                            setSnackBarState(!snackbarVisibleState)
+                            setHiddenState(!hiddenVisibleState)
                         }
                     }
                     if (snackbarVisibleState) {
@@ -138,60 +134,71 @@ class RunDetailsFragment : Fragment() {
                                         runViewModel.deleteRun(run!!)
                                         findNavController().navigateUp()
                                     }) {
-                                        Text(text = "Delete Run")
+                                        Text(text = stringResource(R.string.deleteRun))
                                     }
                                     Button(onClick = {
                                         setSnackBarState(!snackbarVisibleState)
                                         setHiddenState(!hiddenVisibleState)
                                     }) {
-                                        Text(text = "Cancel")
+                                        Text(text = stringResource(R.string.cancel))
                                     }
                                     Row() {
-                                        Text(text = "Are You Sure you Wish to Delete?")
+                                        Text(text = stringResource(R.string.confirmDelete))
                                     }
                                 }
                             },
                             modifier = Modifier.padding(8.dp)
                         ) {
                             Row() {
-                                Text(text = "Are You Sure you Wish to Delete?")
+                                Text(text = stringResource(R.string.confirmDelete))
                             }
                         }
                     }
-
                 }
             }
-
         }
     }
-}
 
+    @Composable
+    fun DisplayText(run: Run?) {
+        DividerOne()
+        Text(text = "Distance (m): ${run?.distanceInMeters}")
+        Text(text = "Calories burned: ${run?.caloriesBurned}")
+        Text(text = "Avg Speed(km/h): ${run?.avgSpeedInKMH}")
+        DividerOne()
+    }
 
-@Composable
-fun ShowRunDetails(run: Run){
-    Box(modifier = Modifier.padding(4.dp),
-        contentAlignment = Alignment.Center) {
-        Column {
-            Row(modifier = Modifier.padding(4.dp)){
-            Text(text = "time stamp: ${run.timestamp}")
-            Text(text = "time ran (in mili): ${run.timeInMillis}")
+    @Composable
+    fun ButtonOne() {
+        Button(
+            modifier = Modifier.padding(vertical = 10.dp),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = Color.Black,
+                disabledContainerColor = Color.Gray
+            ),
+            onClick = {
+                findNavController().navigateUp()
             }
-            DividerOne()
-            Text(text = "Distance (m): ${run.distanceInMeters}")
-            Text(text = "Calories burned: ${run.caloriesBurned}")
-            Text(text = "Avg Speed(km/h): ${run.avgSpeedInKMH}")
-            DividerOne()
-            run.img?.let { Image(bitmap = it.asImageBitmap(), contentDescription = "Runner Detailed Image" ) }
+        ) {
+            Text(text = "Back", color = Color.White)
         }
     }
 
-}
-
-@Composable
-fun IconOne() {
-    Box(
-        modifier = Modifier.padding(5.dp)
-    )
+    @Composable
+    fun ButtonDelete(onClick: () -> Unit) {
+        Button(
+            modifier = Modifier.padding(vertical = 10.dp),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = Color.Black,
+                disabledContainerColor = Color.Gray
+            ),
+            onClick = {
+                onClick()
+            }
+        ) {
+            Text(text = "Delete Run", color = Color.White)
+        }
+    }
 }
 
 /**
@@ -205,5 +212,3 @@ fun DividerOne() {
         modifier = Modifier.padding(top = 48.dp)
     )
 }
-
-

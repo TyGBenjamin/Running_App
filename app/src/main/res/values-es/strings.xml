@@ -67,4 +67,14 @@
     <string name="custom_color_mode">Custom Color</string>
     <string name="customColorLabel">Custom\nChart Color</string>
     <string name="bar_color_label">Bar Color\n(Auto-Generated)</string>
+    <string name="confirmDelete">¿Estás segura de que deseas eliminar?</string>
+    <string name="contentDes">Imagen detallada del corredor</string>
+    <string name="deleteRun">Eliminar ejecución</string>
+    <string name="cancel">Cancelar</string>
+    <string name="confirmSelect">confirmar elección</string>
+
+
+
+
+
 </resources>

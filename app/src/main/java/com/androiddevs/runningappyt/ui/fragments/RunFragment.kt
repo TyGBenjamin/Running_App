@@ -49,7 +49,6 @@ class RunFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setupRecyclerView()
 
-
         when (viewModel.sortType) {
             SortType.DATE -> spFilter.setSelection(viewModel.sortType.ordinal)
             SortType.RUNNING_TIME -> spFilter.setSelection(viewModel.sortType.ordinal)
