@@ -15,6 +15,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/btnShareRun"
+        android:layout_marginTop="16dp"
+        android:clickable="true"
+        android:src="@drawable/ic_baseline_share_24"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/tvDate"
+        app:layout_constraintTop_toBottomOf="@+id/ivRunImage"
+        app:layout_constraintHorizontal_bias="0.5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/tvDate"
         android:layout_width="wrap_content"
@@ -23,7 +35,7 @@
         android:text="@string/date"
         app:layout_constraintEnd_toStartOf="@+id/tvTime"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/btnShareRun"
         app:layout_constraintTop_toBottomOf="@+id/ivRunImage" />
 
     <com.google.android.material.textview.MaterialTextView
