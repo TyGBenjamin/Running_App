@@ -72,6 +72,10 @@
     <string name="deleteRun">Eliminar ejecución</string>
     <string name="cancel">Cancelar</string>
     <string name="confirmSelect">confirmar elección</string>
+    <string name="dateFormat">MM/dd/yyyy</string>
+    <string name="back">retorno</string>
+
+
 
 
 

@@ -72,7 +72,6 @@ class RunDetailsFragment : Fragment() {
                         .background(Color.White)
                 ) {
                     ShowRunDetailsVM(args.runnerID)
-//                    mainViewModel.runs.value?.let { ShowRunDetails(run = it.get(args.runnerID)) }
                 }
             }
         }
@@ -99,7 +98,7 @@ class RunDetailsFragment : Fragment() {
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     if (run != null) {
-                        val simpleDateFormat = SimpleDateFormat("MM/dd/yyyy")
+                        val simpleDateFormat = SimpleDateFormat(stringResource(R.string.dateFormat))
                         val dateString = simpleDateFormat.format(run!!.timestamp)
                         Text(text = "Time Stamp: $dateString ")
                     }
@@ -180,7 +179,7 @@ class RunDetailsFragment : Fragment() {
                 findNavController().navigateUp()
             }
         ) {
-            Text(text = "Back", color = Color.White)
+            Text(text = stringResource(R.string.back), color = Color.White)
         }
     }
 
@@ -196,7 +195,7 @@ class RunDetailsFragment : Fragment() {
                 onClick()
             }
         ) {
-            Text(text = "Delete Run", color = Color.White)
+            Text(text = stringResource(R.string.deleteRun), color = Color.White)
         }
     }
 }

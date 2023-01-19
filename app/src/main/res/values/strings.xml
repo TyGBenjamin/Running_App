@@ -71,4 +71,6 @@
     <string name="deleteRun">Delete Run</string>
     <string name="cancel">Cancel</string>
     <string name="confirmSelect">confirm selection</string>
+    <string name="dateFormat">MM/dd/yyyy</string>
+    <string name="back">Back</string>
 </resources>
