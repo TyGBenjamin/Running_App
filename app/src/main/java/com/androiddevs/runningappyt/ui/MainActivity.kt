@@ -14,7 +14,10 @@ import com.androiddevs.runningappyt.R
 import com.androiddevs.runningappyt.databinding.ActivityMainBinding
 import com.androiddevs.runningappyt.other.Constants.ACTION_SHOW_TRACKING_FRAGMENT
 import com.androiddevs.runningappyt.other.Constants.RADIO_DARK_MODE
+import com.androiddevs.runningappyt.other.Constants.RADIO_ENGLISH
 import com.androiddevs.runningappyt.other.Constants.RADIO_LIGHT_MODE
+import com.androiddevs.runningappyt.other.Constants.RADIO_SPANISH
+import com.androiddevs.runningappyt.other.LanguageManager
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 import kotlinx.android.synthetic.main.activity_main.navHostFragment
@@ -35,6 +38,15 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         val lightMode = sharedPreferences.getBoolean(RADIO_LIGHT_MODE, false)
         val darkMode = sharedPreferences.getBoolean(RADIO_DARK_MODE, false)
+        val english = sharedPreferences.getBoolean(RADIO_ENGLISH, false)
+        val spanish = sharedPreferences.getBoolean(RADIO_SPANISH, false)
+        var languageManager = LanguageManager(this)
+
+        if (english) {
+            languageManager.updateResource("en")
+        } else if (spanish) {
+            languageManager.updateResource("es")
+        }
 
         if (darkMode) {
             setTheme(R.style.DarkTheme)

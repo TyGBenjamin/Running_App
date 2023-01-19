@@ -14,12 +14,10 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Snackbar
 import androidx.compose.material3.Text
-import androidx.compose.material3.contentColorFor
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -40,8 +38,8 @@ import androidx.navigation.fragment.navArgs
 import com.androiddevs.runningappyt.db.Run
 import com.androiddevs.runningappyt.ui.viewmodels.RunDetailsViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import java.text.SimpleDateFormat
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
 
 /**
  * Run details fragment.
