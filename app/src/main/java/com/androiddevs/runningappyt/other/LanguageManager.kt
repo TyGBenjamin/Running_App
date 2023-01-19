@@ -4,14 +4,16 @@ import android.content.Context
 import java.util.*
 
 /**
- * Class which handles language change.
+ * LanguageManager handles language change.
  * @function updateResource receives language code and updates configuration.
  * */
 
 @SuppressWarnings("deprecation")
 class LanguageManager(private val ct: Context) {
     /**
-     *@function updateResource receives language code and updates configuration
+     * Receives language code and updates configuration.
+     *
+     * @param code of the language will be updated
      * */
     fun updateResource(code: String?) {
         val locale = Locale(code)
