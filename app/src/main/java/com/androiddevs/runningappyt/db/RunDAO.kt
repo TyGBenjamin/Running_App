@@ -17,6 +17,9 @@ interface RunDAO {
     @Delete
     suspend fun deleteRun(run: Run)
 
+    @Query("DELETE FROM running_table")
+    suspend fun deleteAllRuns()
+
     @Query("SELECT * FROM running_table ORDER BY timestamp DESC")
     fun getAllRunsSortedByDate(): LiveData<List<Run>>
 

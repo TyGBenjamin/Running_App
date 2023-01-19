@@ -54,4 +54,7 @@
     <string name="statistics">Statistics</string>
     <string name="your_runs">Your Runs</string>
     <string name="cancel_run">Cancel Run</string>
+    <string name="delete_all_runs">Delete All Runs</string>
+    <string name="are_you_sure_you_want_to_delete_all_runs">Are you sure you want to delete all runs?</string>
+    <string name="delete">Delete</string>
 </resources>

@@ -30,6 +30,12 @@ class MainRepository @Inject constructor(
     suspend fun deleteRun(run: Run) = runDao.deleteRun(run)
 
     /**
+     * Deletes All Runs from the db.
+     *
+     */
+    suspend fun deleteAllRuns() = runDao.deleteAllRuns()
+
+    /**
      * Get all runs sorted by date.
      *
      * @return [LiveData] with [List] of [Run]
