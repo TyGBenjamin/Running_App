@@ -79,4 +79,12 @@ class MainViewModel @Inject constructor(private val mainRepository: MainReposito
     fun saveRun(run: Run) = viewModelScope.launch {
         mainRepository.insertRun(run)
     }
+
+    /**
+     * Delete all runs from db.
+     *
+     */
+    fun deleteAllRuns() = viewModelScope.launch {
+        mainRepository.deleteAllRuns()
+    }
 }

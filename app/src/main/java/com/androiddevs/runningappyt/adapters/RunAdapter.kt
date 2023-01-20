@@ -2,6 +2,7 @@
 
 package com.androiddevs.runningappyt.adapters
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.navigation.findNavController
@@ -17,6 +18,7 @@ import com.bumptech.glide.Glide
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
+import kotlinx.android.synthetic.main.item_run.view.btnShareRun
 import kotlinx.android.synthetic.main.item_run.view.ivRunImage
 import kotlinx.android.synthetic.main.item_run.view.tvAvgSpeed
 import kotlinx.android.synthetic.main.item_run.view.tvCalories
@@ -94,6 +96,21 @@ class RunAdapter : RecyclerView.Adapter<RunAdapter.RunViewHolder>() {
 
             val caloriesBurned = "${run.caloriesBurned}kcal"
             tvCalories.text = caloriesBurned
+
+            btnShareRun.setOnClickListener {
+                val intent = Intent(Intent.ACTION_SEND)
+                intent.putExtra(
+                    Intent.EXTRA_TEXT,
+                    "Check out this sick run! \n" +
+                        "Date: ${tvDate.text} \n" +
+                        "Time: ${tvTime.text} \n" +
+                        "Distance: ${tvDistance.text} \n" +
+                        "AvgSpeed: ${tvAvgSpeed.text} \n" +
+                        "Calories Burned: ${tvCalories.text}"
+                )
+                intent.type = "text/plain"
+                context.startActivity(Intent.createChooser(intent, "Send To"))
+            }
         }
     }
 }
