@@ -136,90 +136,90 @@
                 android:text="@string/custom_color_mode" />
         </RadioGroup>
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layoutChartColors"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="horizontal"
             android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/radioGroupChart">
 
+            <TextView
+                android:id="@+id/textCustomColor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/customColorLabel"
+                android:textSize="16dp"
+                android:layout_marginEnd="10dp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@id/guideline4"
+                app:layout_constraintTop_toTopOf="parent" />
+
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="16dp"
-                android:gravity="center"
-                android:orientation="vertical">
+                android:background="@drawable/drawable_background"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="@id/textCustomColor"
+                app:layout_constraintStart_toStartOf="@id/textCustomColor"
+                app:layout_constraintTop_toBottomOf="@id/textCustomColor">
 
                 <TextView
-                    android:id="@+id/textCustomColor"
+                    android:id="@+id/colorChart"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="@string/customColorLabel"
+                    android:layout_margin="1dp"
+                    android:background="@color/colorAccent"
+                    android:padding="5dp"
+                    android:text="@string/colorChange"
                     android:textSize="16dp"
                     android:textStyle="bold" />
 
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/drawable_background"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/colorChart"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="1dp"
-                        android:background="@color/colorAccent"
-                        android:padding="5dp"
-                        android:text="@string/colorChange"
-                        android:textSize="16dp"
-                        android:textStyle="bold" />
-                </LinearLayout>
             </LinearLayout>
+
+            <TextView
+                android:id="@+id/textBarColor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginStart="10dp"
+                android:text="@string/bar_color_label"
+                android:textSize="16dp"
+                android:textStyle="bold"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toEndOf="@id/guideline4"/>
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-
-                android:orientation="vertical">
+                android:background="@drawable/drawable_background"
+                android:orientation="vertical"
+                app:layout_constraintTop_toBottomOf="@id/textBarColor"
+                app:layout_constraintStart_toStartOf="@id/textBarColor"
+                app:layout_constraintEnd_toEndOf="@id/textBarColor">
 
                 <TextView
-                    android:id="@+id/textBarColor"
+                    android:id="@+id/colorBar"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="@string/bar_color_label"
+                    android:layout_margin="1dp"
+                    android:background="@color/colorAccent"
+                    android:padding="5dp"
+                    android:text="@string/colorChange"
                     android:textSize="16dp"
-                    android:textStyle="bold"
-                    app:layout_constraintEnd_toEndOf="parent" />
-
-                <LinearLayout
-
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/drawable_background"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/colorBar"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="1dp"
-                        android:background="@color/colorAccent"
-                        android:padding="5dp"
-                        android:text="@string/colorChange"
-                        android:textSize="16dp"
-                        android:textStyle="bold" />
-                </LinearLayout>
+                    android:textStyle="bold" />
             </LinearLayout>
-        </LinearLayout>
+
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent=".5" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
 
         <TextView
@@ -271,6 +271,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/languageChoice" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
