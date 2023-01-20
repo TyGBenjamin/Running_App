@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/nav_graph"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
     app:startDestination="@id/setupFragment">
 
     <action android:id="@+id/action_global_trackingFragment"
@@ -18,6 +20,9 @@
             app:destination="@id/trackingFragment"
             app:popUpTo="@id/trackingFragment"
             app:popUpToInclusive="true"/>
+        <action
+            android:id="@+id/action_runFragment_to_runDetailsFragment"
+            app:destination="@id/runDetailsFragment" />
     </fragment>
     <fragment
         android:id="@+id/setupFragment"
@@ -47,4 +52,16 @@
         android:id="@+id/settingsFragment"
         android:name="com.androiddevs.runningappyt.ui.fragments.SettingsFragment"
         android:label="SettingsFragment" />
+    <fragment
+        android:id="@+id/runDetailsFragment"
+        android:name="com.androiddevs.runningappyt.ui.fragments.RunDetailsFragment"
+        android:label="fragment_run_details"
+        tools:layout="@layout/fragment_run_details" >
+        <action
+            android:id="@+id/action_runDetailsFragment_to_runFragment"
+            app:destination="@id/runFragment" />
+        <argument
+            android:name="runnerID"
+            app:argType="integer" />
+    </fragment>
 </navigation>

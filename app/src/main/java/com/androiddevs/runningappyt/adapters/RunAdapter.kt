@@ -4,6 +4,7 @@ package com.androiddevs.runningappyt.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -11,6 +12,7 @@ import com.androiddevs.runningappyt.databinding.ItemRunBinding
 import com.androiddevs.runningappyt.db.Run
 import com.androiddevs.runningappyt.other.Constants
 import com.androiddevs.runningappyt.other.TrackingUtility
+import com.androiddevs.runningappyt.ui.fragments.RunFragmentDirections
 import com.bumptech.glide.Glide
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -68,6 +70,12 @@ class RunAdapter : RecyclerView.Adapter<RunAdapter.RunViewHolder>() {
     override fun onBindViewHolder(holder: RunViewHolder, position: Int) {
         val run = differ.currentList[position]
         holder.itemView.apply {
+            setOnClickListener {
+                it.setOnClickListener {
+                    val action = RunFragmentDirections.actionRunFragmentToRunDetailsFragment(run.id)
+                    findNavController().navigate(action)
+                }
+            }
             Glide.with(this).load(run.img).into(ivRunImage)
 
             val calendar = Calendar.getInstance().apply {
