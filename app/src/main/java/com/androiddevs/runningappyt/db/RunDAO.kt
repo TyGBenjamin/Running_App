@@ -17,6 +17,9 @@ interface RunDAO {
     @Delete
     suspend fun deleteRun(run: Run)
 
+    @Query("SELECT * FROM running_table WHERE id in (:id)")
+    suspend fun getRunById(id: Int): Run
+
     @Query("DELETE FROM running_table")
     suspend fun deleteAllRuns()
 
