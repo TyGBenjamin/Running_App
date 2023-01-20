@@ -104,7 +104,7 @@ class SettingsFragment : Fragment() {
 
         etName.setText(name)
         etWeight.setText(weight.toString())
-        val english = sharedPreferences.getBoolean(RADIO_ENGLISH, false)
+        val english = sharedPreferences.getBoolean(RADIO_ENGLISH, true)
         val spanish = sharedPreferences.getBoolean(RADIO_SPANISH, false)
         languageEnglish.isChecked = english
         languageSpanish.isChecked = spanish
