@@ -17,6 +17,7 @@ import com.androiddevs.runningappyt.other.Constants.DYNEG
 import com.androiddevs.runningappyt.other.Constants.DYPOS
 import com.androiddevs.runningappyt.other.SortType
 import com.androiddevs.runningappyt.ui.viewmodels.MainViewModel
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 
 /**
@@ -82,6 +83,15 @@ class RunFragment : Fragment() {
 
         fab.setOnClickListener {
             findNavController().navigate(R.id.action_runFragment_to_trackingFragment)
+        }
+
+        btnDeleteAllRun.setOnClickListener {
+            MaterialAlertDialogBuilder(requireContext(), R.style.AlertDialogTheme)
+                .setMessage(getString(R.string.are_you_sure_you_want_to_delete_all_runs))
+                .setNegativeButton(getString(R.string.dialogCancel)) { _, _ -> }
+                .setPositiveButton(getString(R.string.delete)) { _, _ -> viewModel.deleteAllRuns() }
+                .create()
+                .show()
         }
 
         rvRuns.addOnScrollListener(object : RecyclerView.OnScrollListener() {

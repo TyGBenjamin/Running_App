@@ -74,11 +74,7 @@
     <string name="confirmSelect">confirmar elección</string>
     <string name="dateFormat">MM/dd/yyyy</string>
     <string name="back">retorno</string>
-
-
-
-
-
-
-
+    <string name="delete_all_runs">Eliminar todas las ejecuciones</string>
+    <string name="are_you_sure_you_want_to_delete_all_runs">¿Estás segura de que quieres eliminar todas las ejecuciones?</string>
+    <string name="delete">Eliminar</string>
 </resources>
